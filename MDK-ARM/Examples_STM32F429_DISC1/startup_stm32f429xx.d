@@ -1,0 +1,1 @@
+examples_stm32f429_disc1\startup_stm32f429xx.o: startup_stm32f429xx.s
