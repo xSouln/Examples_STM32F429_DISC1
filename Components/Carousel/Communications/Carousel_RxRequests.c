@@ -6,7 +6,7 @@ extern const xRxTransactionT CarouselTransactions[];
 
 static const PacketHeaderT TransactionRequestHeader =
 {
-	.Identificator = (PacketIdentificatorT)TRANSACTION_REQUEST_IDENTIFICATOR,
+	.Identificator = { .Value = TRANSACTION_REQUEST_IDENTIFICATOR },
 	.DeviceKey = CAROUSEL_DEVICE_KEY
 };
 //----------------------------------------------------------------------------

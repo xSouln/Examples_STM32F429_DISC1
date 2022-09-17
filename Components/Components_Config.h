@@ -8,6 +8,7 @@
 //==============================================================================
 #include "main.h"
 #include "Common/xTypes.h"
+#include "Common/xRxTransaction.h"
 #include "Registers/registers.h"
 //==============================================================================
 #ifdef __cplusplus

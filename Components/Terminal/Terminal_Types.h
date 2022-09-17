@@ -8,7 +8,7 @@
 //==============================================================================
 #include "Terminal_Config.h"
 #include "Terminal_Info.h"
-#include "Common/xTypes.h"
+#include "Components_Config.h"
 //==============================================================================
 typedef enum
 {

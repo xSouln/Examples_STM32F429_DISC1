@@ -6,7 +6,7 @@ extern const xRxTransactionT BrewGroupTransactions[];
 
 static const PacketHeaderT TransactionRequestHeader =
 {
-	.Identificator = (PacketIdentificatorT)TRANSACTION_REQUEST_IDENTIFICATOR,
+	.Identificator = { .Value = TRANSACTION_REQUEST_IDENTIFICATOR },
 	.DeviceKey = BREW_GROUP_DEVICE_KEY
 };
 //----------------------------------------------------------------------------

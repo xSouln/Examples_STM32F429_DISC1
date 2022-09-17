@@ -1079,26 +1079,21 @@
               <FileType>5</FileType>
               <FilePath>..\Components\Camera\Camera_OV2640_Component.h</FilePath>
             </File>
+            <File>
+              <FileName>Camera_AdapterBase.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Components\Camera\Controls\Camera_AdapterBase.c</FilePath>
+            </File>
+            <File>
+              <FileName>Camera_AdapterBase.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Components\Camera\Controls\Camera_AdapterBase.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>Components/Camera/Adapters</GroupName>
           <Files>
-            <File>
-              <FileName>Camera_AdapterBase.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Components\Camera\Adapters\Camera_AdapterBase.c</FilePath>
-            </File>
-            <File>
-              <FileName>Camera_AdapterBase.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Components\Camera\Adapters\Camera_AdapterBase.h</FilePath>
-            </File>
-            <File>
-              <FileName>Camera_Adapters.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Components\Camera\Adapters\Camera_Adapters.h</FilePath>
-            </File>
             <File>
               <FileName>Camera_OV2640_Adapter.c</FileName>
               <FileType>1</FileType>
@@ -1319,31 +1314,21 @@
               <FileType>5</FileType>
               <FilePath>..\Components\Carousel\Controls\Carousel.h</FilePath>
             </File>
+            <File>
+              <FileName>Carousel_MotorBase.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Components\Carousel\Controls\Carousel_MotorBase.c</FilePath>
+            </File>
+            <File>
+              <FileName>Carousel_MotorBase.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Components\Carousel\Controls\Carousel_MotorBase.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>Components/Carousel/Adapters</GroupName>
           <Files>
-            <File>
-              <FileName>Carousel_AdapterBase.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Components\Carousel\Adapters\Carousel_AdapterBase.c</FilePath>
-            </File>
-            <File>
-              <FileName>Carousel_AdapterBase.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Components\Carousel\Adapters\Carousel_AdapterBase.h</FilePath>
-            </File>
-            <File>
-              <FileName>Carousel_Adapters.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Components\Carousel\Adapters\Carousel_Adapters.h</FilePath>
-            </File>
-            <File>
-              <FileName>Carousel_AdaptersConfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Components\Carousel\Adapters\Carousel_AdaptersConfig.h</FilePath>
-            </File>
             <File>
               <FileName>Carousel_DCMotorAdapter.c</FileName>
               <FileType>1</FileType>

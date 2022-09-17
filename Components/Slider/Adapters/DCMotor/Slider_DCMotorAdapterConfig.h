@@ -6,8 +6,7 @@
 extern "C" {
 #endif
 //==============================================================================
-#include "Registers/registers.h"
-#include "main.h"
+#include "Components_Config.h"
 //==============================================================================
 #ifdef __cplusplus
 }

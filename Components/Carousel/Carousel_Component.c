@@ -1,6 +1,6 @@
 //==============================================================================
 #include "Carousel_Component.h"
-#include "Adapters/Carousel_Adapters.h"
+#include "Adapters/DCMotor/Carousel_DCMotorAdapter.h"
 //==============================================================================
 CarouselT Carousel;
 //==============================================================================

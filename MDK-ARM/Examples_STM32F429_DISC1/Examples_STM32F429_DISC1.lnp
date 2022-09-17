@@ -79,7 +79,7 @@
 "examples_stm32f429_disc1\cupscontroller_rxtransactions.o"
 "examples_stm32f429_disc1\carousel_component.o"
 "examples_stm32f429_disc1\carousel.o"
-"examples_stm32f429_disc1\carousel_adapterbase.o"
+"examples_stm32f429_disc1\carousel_motorbase.o"
 "examples_stm32f429_disc1\carousel_dcmotoradapter.o"
 "examples_stm32f429_disc1\carousel_rxrequests.o"
 "examples_stm32f429_disc1\carousel_rxtransactions.o"

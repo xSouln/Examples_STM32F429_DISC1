@@ -7,12 +7,7 @@ examples_stm32f429_disc1/slider_dcmotoradapter.o: \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
   ..\Components\Slider\Adapters\DCMotor\Slider_DCMotorAdapterConfig.h \
-  ..\Libs\Registers\registers.h \
-  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_spi.h \
-  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_timer.h \
-  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_uart.h \
-  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_i2c.h \
-  ..\Core\Inc\main.h \
+  ..\Components\Components_Config.h ..\Core\Inc\main.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h \
   ..\Core\Inc\stm32f4xx_hal_conf.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h \
@@ -53,10 +48,16 @@ examples_stm32f429_disc1/slider_dcmotoradapter.o: \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
-  ..\Components\Slider\Slider_Types.h ..\Libs\Common\xRxTransaction.h \
-  ..\Libs\Common\xRxRequest.h ..\Libs\Common\xRx.h ..\Libs\Common\xTx.h \
-  ..\Libs\Common\xDataBuffer.h ..\Libs\Common\xCircleBuffer.h \
+  ..\Libs\Common\xRxTransaction.h ..\Libs\Common\xRxRequest.h \
+  ..\Libs\Common\xRx.h ..\Libs\Common\xTx.h ..\Libs\Common\xDataBuffer.h \
+  ..\Libs\Common\xCircleBuffer.h \
   ..\Libs\Common\Adapters\xRxTransactionTransferAdapter.h \
-  ..\Libs\Common\xTxTransfer.h ..\Components\Slider\Slider_Config.h \
+  ..\Libs\Common\xTxTransfer.h ..\Libs\Registers\registers.h \
+  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_spi.h \
+  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_timer.h \
+  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_uart.h \
+  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_i2c.h \
+  ..\Components\Slider\Slider_Types.h \
+  ..\Components\Slider\Slider_Config.h \
   ..\Components\Slider\Slider_Info.h \
   ..\Components\Slider\Controls\Slider.h

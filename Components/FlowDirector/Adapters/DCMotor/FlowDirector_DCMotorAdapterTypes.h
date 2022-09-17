@@ -6,6 +6,7 @@
 extern "C" {
 #endif
 //==============================================================================
+#include "Components_Config.h"
 #include "FlowDirector/Controls/FlowDirector_MotorBase.h"
 #include "FlowDirector_DCMotorAdapterConfig.h"
 //==============================================================================

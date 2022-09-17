@@ -41,7 +41,7 @@ void WIZspiDeselectChip()
 uint8_t WIZspiReceiveByte()
 {
 	uint8_t byte = 0xff;
-  
+  /*
   WIZspi->Control2.CurrentDataSize = 1;
   WIZspi->Control1.SpiEnable = true;
   WIZspi->Control1.MasterTransferStart = true;
@@ -55,12 +55,13 @@ uint8_t WIZspiReceiveByte()
   WIZspi->Clear.EndOfTransfer = true;
   WIZspi->Clear.TransferFilled = true;
   WIZspi->Control1.SpiEnable = false;
-
+*/
   return byte;
 }
 //------------------------------------------------------------------------------
 void WIZspiTransmiteByte(uint8_t byte)
 {
+	/*
 	WIZspi->Control2.CurrentDataSize = 1;
   WIZspi->Control1.SpiEnable = true;
   WIZspi->Control1.MasterTransferStart = true;
@@ -74,6 +75,7 @@ void WIZspiTransmiteByte(uint8_t byte)
   WIZspi->Clear.EndOfTransfer = true;
   WIZspi->Clear.TransferFilled = true;
   WIZspi->Control1.SpiEnable = false;
+  */
 }
 //------------------------------------------------------------------------------
 static void EventListener(TCPServerT* server, TCPServerEventSelector selector, uint32_t args, uint32_t count)

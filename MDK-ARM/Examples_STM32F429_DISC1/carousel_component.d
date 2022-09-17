@@ -11,18 +11,7 @@ examples_stm32f429_disc1/carousel_component.o: \
   ..\Libs\Common\Adapters\xRxTransactionTransferAdapter.h \
   ..\Libs\Common\xTxTransfer.h ..\Components\Carousel\Carousel_Config.h \
   ..\Components\Carousel\Carousel_Info.h \
-  ..\Components\Carousel\Adapters\Carousel_AdapterBase.h \
-  ..\Components\Carousel\Adapters\Carousel_Adapters.h \
-  ..\Components\Carousel\Adapters\DCMotor\Carousel_DCMotorAdapter.h \
-  ..\Components\Carousel\Adapters\DCMotor\Carousel_DCMotorAdapterTypes.h \
-  ..\Components\Carousel\Adapters\Carousel_AdapterBase.h \
-  ..\Components\Carousel\Adapters\DCMotor\Carousel_DCMotorAdapterConfig.h \
-  ..\Libs\Registers\registers.h \
-  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_spi.h \
-  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_timer.h \
-  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_uart.h \
-  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_i2c.h \
-  ..\Core\Inc\main.h \
+  ..\Components\Components_Config.h ..\Core\Inc\main.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h \
   ..\Core\Inc\stm32f4xx_hal_conf.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h \
@@ -62,4 +51,13 @@ examples_stm32f429_disc1/carousel_component.o: \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_spi.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
-  C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h
+  C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
+  ..\Libs\Registers\registers.h \
+  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_spi.h \
+  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_timer.h \
+  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_uart.h \
+  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_i2c.h \
+  ..\Components\Carousel\Controls\Carousel_MotorBase.h \
+  ..\Components\Carousel\Adapters\DCMotor\Carousel_DCMotorAdapter.h \
+  ..\Components\Carousel\Adapters\DCMotor\Carousel_DCMotorAdapterTypes.h \
+  ..\Components\Carousel\Adapters\DCMotor\Carousel_DCMotorAdapterConfig.h

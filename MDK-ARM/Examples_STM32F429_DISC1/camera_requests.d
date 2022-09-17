@@ -63,6 +63,5 @@ examples_stm32f429_disc1/camera_requests.o: \
   ..\Libs\Common\xRxTransaction.h ..\Libs\Common\xRxRequest.h \
   ..\Libs\Common\xRx.h \
   ..\Libs\Common\Adapters\xRxTransactionTransferAdapter.h \
-  ..\Components\Camera\Adapters\Camera_AdapterBase.h \
-  ..\Components\Camera\Adapters\Camera_Adapters.h \
+  ..\Components\Camera\Controls\Camera_AdapterBase.h \
   ..\Components\Camera\Communications\Camera_Requests.h

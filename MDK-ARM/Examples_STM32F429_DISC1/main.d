@@ -46,7 +46,11 @@ examples_stm32f429_disc1/main.o: ..\Core\Src\main.c ..\Core\Inc\main.h \
   ..\Core\Inc\gpio.h ..\Components\Components.h \
   ..\Components\Components_Config.h ..\Libs\Common\xTypes.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
-  ..\Libs\Registers\registers.h \
+  ..\Libs\Common\xRxTransaction.h ..\Libs\Common\xRxRequest.h \
+  ..\Libs\Common\xRx.h ..\Libs\Common\xTx.h ..\Libs\Common\xDataBuffer.h \
+  ..\Libs\Common\xCircleBuffer.h \
+  ..\Libs\Common\Adapters\xRxTransactionTransferAdapter.h \
+  ..\Libs\Common\xTxTransfer.h ..\Libs\Registers\registers.h \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_spi.h \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_timer.h \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_uart.h \
@@ -59,11 +63,6 @@ examples_stm32f429_disc1/main.o: ..\Core\Src\main.c ..\Core\Inc\main.h \
   ..\Components\Terminal\Terminal_Info.h \
   ..\Components\Terminal\Adapters\Terminal_Adapters.h \
   ..\Components\Terminal\Adapters\Terminal_TransferAdapter.h \
-  ..\Libs\Common\xTxTransfer.h ..\Libs\Common\xTx.h \
-  ..\Libs\Common\xDataBuffer.h ..\Libs\Common\xCircleBuffer.h \
-  ..\Libs\Common\xRxTransaction.h ..\Libs\Common\xRxRequest.h \
-  ..\Libs\Common\xRx.h \
-  ..\Libs\Common\Adapters\xRxTransactionTransferAdapter.h \
   ..\Components\SerialPort\SerialPort_UART_Component.h \
   ..\Components\SerialPort\Controls\SerialPort.h \
   ..\Components\SerialPort\SerialPort_Types.h \
@@ -103,8 +102,8 @@ examples_stm32f429_disc1/main.o: ..\Core\Src\main.c ..\Core\Inc\main.h \
   ..\Libs\OV2640\OV2640_SpecialEffectsTables.h \
   ..\Libs\OV2640\OV2640_ResolutionTables.h \
   ..\Libs\OV2640\OV2640_xVGA_Tables.h \
-  ..\Components\Camera\Adapters\Camera_AdapterBase.h \
-  ..\Components\Camera\Adapters\Camera_Adapters.h \
+  ..\Components\Camera\Controls\Camera_AdapterBase.h \
+  ..\Components\Camera\Controls\Camera_AdapterBase.h \
   ..\Components\Camera\Adapters\OV2640\Camera_OV2640_Adapter.h \
   ..\Components\Camera\Adapters\OV2640\Camera_OV2640_AdapterTypes.h \
   ..\Components\Camera\Adapters\OV2640\Camera_OV2640_AdapterConfig.h \
@@ -115,7 +114,7 @@ examples_stm32f429_disc1/main.o: ..\Core\Src\main.c ..\Core\Inc\main.h \
   ..\Components\Carousel\Carousel_Types.h \
   ..\Components\Carousel\Carousel_Config.h \
   ..\Components\Carousel\Carousel_Info.h \
-  ..\Components\Carousel\Adapters\Carousel_AdapterBase.h \
+  ..\Components\Carousel\Controls\Carousel_MotorBase.h \
   ..\Components\Slider\Slider_Component.h \
   ..\Components\Slider\Controls\Slider.h \
   ..\Components\Slider\Slider_Types.h \

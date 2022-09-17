@@ -27,6 +27,7 @@ typedef enum
 	xResultRequestIsNotFound,
 	xResultLinkError,
 	xResulComponentInitializationError,
+	xResultOutOfRange
 	
 } xResult;
 //==============================================================================

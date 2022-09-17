@@ -17,13 +17,7 @@ examples_stm32f429_disc1/brewgroup_component.o: \
   ..\Components\BrewGroup\Controls\BrewGroup_WaterPumpBase.h \
   ..\Components\BrewGroup\Adapters\DCMotor\BrewGroup_DCMotorAdapter.h \
   ..\Components\BrewGroup\Adapters\DCMotor\BrewGroup_DCMotorAdapterTypes.h \
-  ..\Components\BrewGroup\Adapters\DCMotor\BrewGroup_DCMotorAdapterConfig.h \
-  ..\Libs\Registers\registers.h \
-  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_spi.h \
-  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_timer.h \
-  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_uart.h \
-  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_i2c.h \
-  ..\Core\Inc\main.h \
+  ..\Components\Components_Config.h ..\Core\Inc\main.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h \
   ..\Core\Inc\stm32f4xx_hal_conf.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h \
@@ -64,6 +58,12 @@ examples_stm32f429_disc1/brewgroup_component.o: \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
+  ..\Libs\Registers\registers.h \
+  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_spi.h \
+  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_timer.h \
+  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_uart.h \
+  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_i2c.h \
+  ..\Components\BrewGroup\Adapters\DCMotor\BrewGroup_DCMotorAdapterConfig.h \
   ..\Components\BrewGroup\Adapters\Thermostat\BrewGroup_ThermostatAdapter.h \
   ..\Components\BrewGroup\Adapters\Thermostat\BrewGroup_ThermostatAdapterTypes.h \
   ..\Components\BrewGroup\Adapters\Thermostat\BrewGroup_ThermostatAdapterConfig.h \

@@ -2,8 +2,7 @@ examples_stm32f429_disc1/cupscontroller_component.o: \
   ..\Components\CupsController\CupsController_Component.c \
   ..\Components\CupsController\CupsController_Component.h \
   ..\Components\CupsController\Controls\CupsController.h \
-  ..\Components\CupsController\CupsController_Types.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdlib.h ..\Core\Inc\main.h \
+  ..\Components\Components_Config.h ..\Core\Inc\main.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h \
   ..\Core\Inc\stm32f4xx_hal_conf.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h \
@@ -45,10 +44,8 @@ examples_stm32f429_disc1/cupscontroller_component.o: \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
-  ..\Libs\WS2812\WS2812.h \
+  ..\Libs\Common\xTypes.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
-  ..\Libs\WS2812\WS2812_Config.h ..\Libs\Common\xTypes.h \
-  ..\Libs\WS2812\WS2812_Info.h ..\Libs\WS2812\WS2812_DrawManagerBase.h \
   ..\Libs\Common\xRxTransaction.h ..\Libs\Common\xRxRequest.h \
   ..\Libs\Common\xRx.h ..\Libs\Common\xTx.h ..\Libs\Common\xDataBuffer.h \
   ..\Libs\Common\xCircleBuffer.h \
@@ -58,6 +55,10 @@ examples_stm32f429_disc1/cupscontroller_component.o: \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_timer.h \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_uart.h \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_i2c.h \
+  ..\Components\CupsController\CupsController_Types.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
+  ..\Libs\WS2812\WS2812.h ..\Libs\WS2812\WS2812_Config.h \
+  ..\Libs\WS2812\WS2812_Info.h ..\Libs\WS2812\WS2812_DrawManagerBase.h \
   ..\Components\CupsController\CupsController_Info.h \
   ..\Components\CupsController\CupsController_Config.h \
   ..\Components\CupsController\Controls\CupsController_LEDBase.h \

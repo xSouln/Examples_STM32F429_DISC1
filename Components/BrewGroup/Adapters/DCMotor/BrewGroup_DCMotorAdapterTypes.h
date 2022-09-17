@@ -6,6 +6,7 @@
 extern "C" {
 #endif
 //==============================================================================
+#include "Components_Config.h"
 #include "BrewGroup/Controls/BrewGroup_MotorBase.h"
 #include "BrewGroup_DCMotorAdapterConfig.h"
 //==============================================================================

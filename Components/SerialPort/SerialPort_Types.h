@@ -6,8 +6,7 @@
  extern "C" {
 #endif 
 //==============================================================================
-#include "main.h"
-#include "Common/xTypes.h"
+#include "Components_Config.h"
 #include "Common/xTx.h"
 #include "Common/xRx.h"
 #include "SerialPort_Config.h"

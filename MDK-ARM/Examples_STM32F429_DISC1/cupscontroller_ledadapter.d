@@ -54,13 +54,14 @@ examples_stm32f429_disc1/cupscontroller_ledadapter.o: \
   ..\Libs\Common\xRx.h ..\Libs\Common\xTx.h ..\Libs\Common\xDataBuffer.h \
   ..\Libs\Common\xCircleBuffer.h \
   ..\Libs\Common\Adapters\xRxTransactionTransferAdapter.h \
-  ..\Libs\Common\xTxTransfer.h ..\Libs\Registers\registers.h \
+  ..\Libs\Common\xTxTransfer.h \
+  ..\Components\CupsController\CupsController_Info.h \
+  ..\Components\CupsController\CupsController_Config.h \
+  ..\Components\Components_Config.h ..\Libs\Registers\registers.h \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_spi.h \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_timer.h \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_uart.h \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_i2c.h \
-  ..\Components\CupsController\CupsController_Info.h \
-  ..\Components\CupsController\CupsController_Config.h \
   ..\Components\CupsController\Controls\CupsController_LEDBase.h \
   ..\Components\CupsController\Controls\CupsController_HeaterBase.h \
   ..\Components\CupsController\Controls\CupsController_FlowDirectorBase.h

@@ -2,17 +2,7 @@ examples_stm32f429_disc1/brewgroup_dcmotoradapter.o: \
   ..\Components\BrewGroup\Adapters\DCMotor\BrewGroup_DCMotorAdapter.c \
   ..\Components\BrewGroup\Adapters\DCMotor\BrewGroup_DCMotorAdapter.h \
   ..\Components\BrewGroup\Adapters\DCMotor\BrewGroup_DCMotorAdapterTypes.h \
-  ..\Components\BrewGroup\Controls\BrewGroup_MotorBase.h \
-  ..\Libs\Common\xTypes.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
-  ..\Components\BrewGroup\Adapters\DCMotor\BrewGroup_DCMotorAdapterConfig.h \
-  ..\Libs\Registers\registers.h \
-  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_spi.h \
-  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_timer.h \
-  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_uart.h \
-  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_i2c.h \
-  ..\Core\Inc\main.h \
+  ..\Components\Components_Config.h ..\Core\Inc\main.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h \
   ..\Core\Inc\stm32f4xx_hal_conf.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h \
@@ -20,6 +10,7 @@ examples_stm32f429_disc1/brewgroup_dcmotoradapter.o: \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f429xx.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\CMSIS\Include\core_cm4.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\CMSIS\Include\cmsis_version.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\CMSIS\Include\cmsis_compiler.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\CMSIS\Include\cmsis_armclang.h \
@@ -53,12 +44,20 @@ examples_stm32f429_disc1/brewgroup_dcmotoradapter.o: \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
-  ..\Components\BrewGroup\BrewGroup_Types.h \
+  ..\Libs\Common\xTypes.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
   ..\Libs\Common\xRxTransaction.h ..\Libs\Common\xRxRequest.h \
   ..\Libs\Common\xRx.h ..\Libs\Common\xTx.h ..\Libs\Common\xDataBuffer.h \
   ..\Libs\Common\xCircleBuffer.h \
   ..\Libs\Common\Adapters\xRxTransactionTransferAdapter.h \
-  ..\Libs\Common\xTxTransfer.h \
+  ..\Libs\Common\xTxTransfer.h ..\Libs\Registers\registers.h \
+  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_spi.h \
+  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_timer.h \
+  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_uart.h \
+  ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_i2c.h \
+  ..\Components\BrewGroup\Controls\BrewGroup_MotorBase.h \
+  ..\Components\BrewGroup\Adapters\DCMotor\BrewGroup_DCMotorAdapterConfig.h \
+  ..\Components\BrewGroup\BrewGroup_Types.h \
   ..\Components\BrewGroup\BrewGroup_Config.h \
   ..\Components\BrewGroup\BrewGroup_Info.h \
   ..\Components\BrewGroup\Controls\BrewGroup_ThermostatBase.h \

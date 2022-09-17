@@ -6,6 +6,7 @@
  extern "C" {
 #endif 
 //==============================================================================
+#include "Components_Config.h"
 #include "CupsController/CupsController_Types.h"
 #include "CupsController/Controls/CupsController_DrawManager.h"
 //------------------------------------------------------------------------------

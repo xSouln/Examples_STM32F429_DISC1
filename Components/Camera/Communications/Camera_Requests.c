@@ -6,7 +6,7 @@ extern const xRxTransactionT CameraTransactions[];
 
 static const PacketHeaderT TransactionRequestHeader =
 {
-	.Identificator = (PacketIdentificatorT)TRANSACTION_REQUEST_IDENTIFICATOR,
+	.Identificator = { .Value = TRANSACTION_REQUEST_IDENTIFICATOR },
 	.DeviceKey = CAMERA_DEVICE_KEY
 };
 //----------------------------------------------------------------------------

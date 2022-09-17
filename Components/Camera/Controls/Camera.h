@@ -7,7 +7,7 @@
 #endif 
 //==============================================================================
 #include "Camera/Camera_Types.h"
-#include "Camera/Adapters/Camera_Adapters.h"
+#include "Camera/Controls/Camera_AdapterBase.h"
 //==============================================================================
 xResult CameraInit(CameraT* camera, void* parent, CameraInterfaceT* interface);
 //------------------------------------------------------------------------------

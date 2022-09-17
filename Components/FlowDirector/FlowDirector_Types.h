@@ -8,6 +8,7 @@
 //==============================================================================
 #include "Common/xTypes.h"
 #include "Common/xRxTransaction.h"
+#include "Components_Config.h"
 #include "FlowDirector_Config.h"
 #include "FlowDirector/Controls/FlowDirector_MotorBase.h"
 //==============================================================================

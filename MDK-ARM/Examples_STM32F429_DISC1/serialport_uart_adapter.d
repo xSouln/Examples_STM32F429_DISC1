@@ -51,7 +51,10 @@ examples_stm32f429_disc1/serialport_uart_adapter.o: \
   ..\Libs\Common\xRx.h ..\Libs\Common\xRxReceiver.h \
   ..\Components\SerialPort\Adapters\UART\SerialPort_UART_AdapterInfo.h \
   ..\Components\SerialPort\Adapters\UART\SerialPort_UART_AdapterConfig.h \
-  ..\Components\Components_Config.h ..\Libs\Registers\registers.h \
+  ..\Components\Components_Config.h ..\Libs\Common\xRxTransaction.h \
+  ..\Libs\Common\xRxRequest.h \
+  ..\Libs\Common\Adapters\xRxTransactionTransferAdapter.h \
+  ..\Libs\Common\xTxTransfer.h ..\Libs\Registers\registers.h \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_spi.h \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_timer.h \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_uart.h \

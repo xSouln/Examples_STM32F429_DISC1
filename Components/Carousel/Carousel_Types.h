@@ -9,15 +9,18 @@
 #include "Common/xTypes.h"
 #include "Common/xRxTransaction.h"
 #include "Carousel_Config.h"
-#include "Adapters/Carousel_AdapterBase.h"
+#include "Components_Config.h"
+#include "Carousel/Controls/Carousel_MotorBase.h"
 //==============================================================================
 typedef enum
 {
 	CarouselEventIdle,
 	CarouselEventPositionIsSet,
 	CarouselEventZeroMark,
+	CarouselEventCalibrationComplete,
+	CarouselEventCalibrationError,
 	CarouselEventTimeout,
-	CarouselEventOvercurrent
+	CarouselEventOvercurrent,
 	
 } CarouselEventSelector;
 //------------------------------------------------------------------------------
@@ -58,6 +61,8 @@ typedef struct
 	float StartPower;
 	float StopPower;
 	
+	float Power;
+	
 } CarouselOptionsT;
 //------------------------------------------------------------------------------
 typedef CarouselOptionsT CarouselRequestSetOptionsT;
@@ -65,7 +70,9 @@ typedef CarouselOptionsT CarouselRequestSetOptionsT;
 typedef enum
 {
 	CarouselSetPositionModeCommomActionIdle,
-	CarouselSetPositionModeStopAtZeroMark = 1 << 0
+	CarouselSetPositionModeStopAtZeroMark,
+	CarouselSetPositionModeMoveOutAtZeroMark,
+	CarouselSetPositionModeFindZeroMark,
 	
 } CarouselSetPositionModes;
 //------------------------------------------------------------------------------
@@ -86,7 +93,7 @@ typedef enum
 	CarouselMotionTimeout,
 	CarouselMotionOvercurrent,
 	
-} CarouselMotionErrors;
+} CarouselMotionResult;
 //------------------------------------------------------------------------------
 typedef enum
 {
@@ -94,7 +101,7 @@ typedef enum
 	CarouselMotionStateMovingForward,
 	CarouselMotionStateMovingBackward,
 	
-} CarouselMotionStates;
+} CarouselMotionStatus;
 //------------------------------------------------------------------------------
 typedef enum
 {
@@ -102,6 +109,25 @@ typedef enum
 	CarouselSensorOvercurrent = 1 << 1
 	
 } CarouselSensors;
+//------------------------------------------------------------------------------
+typedef enum
+{
+	CarouselCalibratinStatusNotColibated,
+	CarouselCalibratinStatusCalibrating,
+	CarouselCalibratinStatusColibated,
+	CarouselCalibratinStatusError
+	
+} CarouselCalibratinStatus;
+//------------------------------------------------------------------------------
+typedef enum
+{
+	CarouselCalibratinStateIdle,
+	CarouselCalibratinStateFindZeroMark,
+	CarouselCalibratinStateMoveOutAtZeroMarkAndResetSteps,
+	CarouselCalibratinStateFindZeroMarkBackSide,
+	CarouselCalibratinStateMoveOutAtZeroMarkAndCalibrate
+	
+} CarouselCalibratinStates;
 //------------------------------------------------------------------------------
 typedef union
 {
@@ -122,29 +148,24 @@ typedef union
 		uint64_t Sensors : 2; //CarouselSensors
 		
 		uint64_t Motion : 4; //CarouselMotionStates
-		uint64_t Errors : 4; //CarouselMotionErrors
+		uint64_t MotionResult : 4; //CarouselMotionErrors
+		
+		uint64_t Calibration : 2; //CarouselCalibratinStatus
+		uint64_t CalibrationState : 4;
+		
+		uint64_t LastSensorsState : 2;
 		
 		uint64_t InitResult : 4; //xResult
-		uint64_t DriverInitResult : 4; //xResult
-		uint64_t AdapterInitResult : 4; //xResult
 	};
 	
 	uint64_t Value;
 	
 } CarouselStatusT;
 //------------------------------------------------------------------------------
-#define CAROUSEL_SPEED_CALIBRATION_POLYNOMIAL_SIZE 4
-
-typedef struct
-{
-	float Polynomial[CAROUSEL_SPEED_CALIBRATION_POLYNOMIAL_SIZE];
-	
-} CarouselSpeedCalibrationPolynomialT;
-//------------------------------------------------------------------------------
 typedef struct
 {
 	float Position;
-	//CarouselSpeedCalibrationPolynomialT Speed;
+	float Offset;
 	
 } CarouselCalibrationT;
 //------------------------------------------------------------------------------
@@ -152,8 +173,8 @@ typedef struct
 {
 	OBJECT_HEADER;
 	
-	CarouselAdapterBaseT Adapter;
 	CarouselInterfaceT* Interface;
+	CarouselMotorBaseT Motor;
 	
 	CarouselStatusT Status;
 	

@@ -103,8 +103,8 @@ examples_stm32f429_disc1/terminal_rxrequests.o: \
   ..\Libs\OV2640\OV2640_SpecialEffectsTables.h \
   ..\Libs\OV2640\OV2640_ResolutionTables.h \
   ..\Libs\OV2640\OV2640_xVGA_Tables.h \
-  ..\Components\Camera\Adapters\Camera_AdapterBase.h \
-  ..\Components\Camera\Adapters\Camera_Adapters.h \
+  ..\Components\Camera\Controls\Camera_AdapterBase.h \
+  ..\Components\Camera\Controls\Camera_AdapterBase.h \
   ..\Components\Camera\Adapters\OV2640\Camera_OV2640_Adapter.h \
   ..\Components\Camera\Adapters\OV2640\Camera_OV2640_AdapterTypes.h \
   ..\Components\Camera\Adapters\OV2640\Camera_OV2640_AdapterConfig.h \
@@ -116,7 +116,7 @@ examples_stm32f429_disc1/terminal_rxrequests.o: \
   ..\Components\Carousel\Carousel_Types.h \
   ..\Components\Carousel\Carousel_Config.h \
   ..\Components\Carousel\Carousel_Info.h \
-  ..\Components\Carousel\Adapters\Carousel_AdapterBase.h \
+  ..\Components\Carousel\Controls\Carousel_MotorBase.h \
   ..\Components\Slider\Slider_Component.h \
   ..\Components\Slider\Controls\Slider.h \
   ..\Components\Slider\Slider_Types.h \

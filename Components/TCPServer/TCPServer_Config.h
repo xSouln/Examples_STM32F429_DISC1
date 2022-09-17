@@ -7,6 +7,7 @@
 #endif
 //==============================================================================
 #include <stdint.h>
+#include "Components_Config.h"
 //==============================================================================
 static const uint8_t TCP_SERVER_DEFAULT_IP[4] = { 192, 168, 0, 40 };
 static const uint8_t TCP_SERVER_DEFAULT_GETAWAY[4] = { 192, 168, 0, 1 };

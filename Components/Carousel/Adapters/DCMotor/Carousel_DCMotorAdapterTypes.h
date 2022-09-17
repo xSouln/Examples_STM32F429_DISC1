@@ -6,7 +6,8 @@
 extern "C" {
 #endif
 //==============================================================================
-#include "Carousel/Adapters/Carousel_AdapterBase.h"
+#include "Components_Config.h"
+#include "Carousel/Controls/Carousel_MotorBase.h"
 #include "Carousel_DCMotorAdapterConfig.h"
 //==============================================================================
 typedef struct
@@ -50,6 +51,7 @@ typedef struct
 	{
 		uint8_t SensorZeroMarkOnStateLogicLevel : 1;
 		uint8_t SensorOvercurrentOnStateLogicLevel : 1;
+		//uint8_t SensorZeroMarkLastState : 1;
 		uint8_t PWM_ForwardChannel : 2;
 		uint8_t PWM_BackwardChannel : 2;
 	};

@@ -8,6 +8,7 @@
 //==============================================================================
 #include "Common/xTypes.h"
 #include "Common/xRxTransaction.h"
+#include "Components_Config.h"
 #include "Slider_Config.h"
 #include "Adapters/Slider_AdapterBase.h"
 //==============================================================================

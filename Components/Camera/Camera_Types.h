@@ -10,7 +10,7 @@
 #include "Common/xTypes.h"
 #include "Common/xTxTransfer.h"
 #include "Common/xRxTransaction.h"
-#include "Adapters/Camera_AdapterBase.h"
+#include "Controls/Camera_AdapterBase.h"
 //==============================================================================
 typedef enum
 {

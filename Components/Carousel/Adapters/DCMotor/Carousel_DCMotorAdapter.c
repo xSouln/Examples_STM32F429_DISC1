@@ -2,10 +2,15 @@
 #include <string.h>
 #include "Carousel_DCMotorAdapter.h"
 //==============================================================================
+static xResult SetPosition(CarouselT* device, CarouselRequestSetPositionT* request);
+static xResult ResetPosition(CarouselT* device);
+//==============================================================================
 static inline void UpdateSensors(CarouselT* device)
 {
-	CarouselDCMotorAdapterT* adapter = device->Adapter.Child;
+	CarouselDCMotorAdapterT* adapter = device->Motor.Child;
 	CarouselSensorsT sensors_state;
+	
+	device->Status.LastSensorsState = device->Status.Value;
 	
 	sensors_state.ZeroMark = (adapter->SensorZeroMarkPort->IDR & adapter->SensorZeroMarkPin) > 0;
 	sensors_state.ZeroMark = sensors_state.ZeroMark == adapter->SensorZeroMarkOnStateLogicLevel;
@@ -16,9 +21,76 @@ static inline void UpdateSensors(CarouselT* device)
 	device->Status.Sensors = sensors_state.Value;
 }
 //------------------------------------------------------------------------------
+static void CalibrationHandler(CarouselT* device, int position_total)
+{
+	if (device->Status.Calibration == CarouselCalibratinStatusCalibrating
+		&& device->Status.Motion == CarouselMotionStateStopped)
+	{
+		if (device->Status.MotionResult != CarouselMotionNoError)
+		{
+			device->Status.Calibration = CarouselCalibratinStatusError;
+			device->Status.CalibrationState = CarouselCalibratinStateIdle;
+			device->Interface->EventListener(device, CarouselEventCalibrationError, 0, 0);
+			return;
+		}
+		
+		CarouselRequestSetPositionT request;
+		
+		switch(device->Status.CalibrationState)
+		{
+			case CarouselCalibratinStateFindZeroMark:
+				device->Status.CalibrationState = CarouselCalibratinStateMoveOutAtZeroMarkAndResetSteps;
+				request.Angle = 10000;
+				request.Mode = CarouselSetPositionModeMoveOutAtZeroMark;
+				request.Power = 30.0;
+				request.Timeout = 60000;
+				SetPosition(device, &request);
+				return;
+			
+			case CarouselCalibratinStateMoveOutAtZeroMarkAndResetSteps:
+				device->Status.CalibrationState = CarouselCalibratinStateFindZeroMarkBackSide;
+				request.Angle = 10000;
+				request.Mode = CarouselSetPositionModeFindZeroMark;
+				request.Power = 80.0;
+				request.Timeout = 60000;
+				ResetPosition(device);
+				SetPosition(device, &request);
+				return;
+			
+			case CarouselCalibratinStateFindZeroMarkBackSide:
+				device->Status.CalibrationState = CarouselCalibratinStateMoveOutAtZeroMarkAndCalibrate;
+				request.Angle = 10000;
+				request.Mode = CarouselSetPositionModeMoveOutAtZeroMark;
+				request.Power = 30.0;
+				request.Timeout = 60000;
+				SetPosition(device, &request);
+				return;
+		}
+		
+		device->Status.Calibration = CarouselCalibratinStatusColibated;
+		device->Status.CalibrationState = CarouselCalibratinStateIdle;
+		
+		//position_total *= -1;
+		
+		device->Calibration.Position = ((float)position_total / 360.0);
+		ResetPosition(device);
+		
+		device->TotalAngle = 0;
+		
+		device->Interface->EventListener(device, CarouselEventCalibrationComplete, 0, 0);
+		
+		request.Angle = device->Calibration.Offset;
+		request.Power = 40.0;
+		request.Mode = 0;
+		request.Timeout = (uint32_t)(device->Calibration.Offset * 3000);
+		
+		SetPosition(device, &request);
+	}
+}
+//------------------------------------------------------------------------------
 static void Handler(CarouselT* device)
 {
-	CarouselDCMotorAdapterT* adapter = device->Adapter.Child;
+	CarouselDCMotorAdapterT* adapter = device->Motor.Child;
 	int position_total = adapter->EncoderTimer->Counter;
 	int power;
 	
@@ -50,7 +122,7 @@ static void Handler(CarouselT* device)
 		if (device->Status.Motion != CarouselMotionStateStopped)
 		{
 			device->Status.Motion = CarouselMotionStateStopped;
-			device->Status.Errors = CarouselMotionOvercurrent;
+			device->Status.MotionResult = CarouselMotionOvercurrent;
 			
 			device->Interface->EventListener(device, CarouselEventOvercurrent, 0, 0);
 		}
@@ -59,10 +131,24 @@ static void Handler(CarouselT* device)
 	
 	if (device->Status.Motion == CarouselMotionStateStopped)
 	{
+		CalibrationHandler(device, position_total);
 		return;
 	}
 	
-	if (device->Status.Sensors & CarouselSensorZeroMark && (device->Mode & CarouselSetPositionModeStopAtZeroMark))
+	if (device->Status.Sensors & CarouselSensorZeroMark)
+	{
+		if ((device->Mode == CarouselSetPositionModeStopAtZeroMark)
+		|| ((device->Mode == CarouselSetPositionModeFindZeroMark) && (device->Status.LastSensorsState & CarouselSensorZeroMark) == 0))
+		{
+			adapter->PWM_ForwardTimer->CaptureCompareOutput.Value &= ~adapter->Values.PWM_Forward.OutputEnableMask;
+			adapter->PWM_BackwardTimer->CaptureCompareOutput.Value &= ~adapter->Values.PWM_Backward.OutputEnableMask;
+			
+			device->Status.Motion = CarouselMotionStateStopped;
+			
+			device->Interface->EventListener(device, CarouselEventZeroMark, 0, 0);
+		}
+	}
+	else if ((device->Mode == CarouselSetPositionModeMoveOutAtZeroMark) && ((device->Status.LastSensorsState & CarouselSensorZeroMark) > 0))
 	{
 		adapter->PWM_ForwardTimer->CaptureCompareOutput.Value &= ~adapter->Values.PWM_Forward.OutputEnableMask;
 		adapter->PWM_BackwardTimer->CaptureCompareOutput.Value &= ~adapter->Values.PWM_Backward.OutputEnableMask;
@@ -94,7 +180,7 @@ static void Handler(CarouselT* device)
 			adapter->PWM_BackwardTimer->CaptureCompareOutput.Value &= ~adapter->Values.PWM_Backward.OutputEnableMask;
 			
 			device->Status.Motion = CarouselMotionStateStopped;
-			device->Status.Errors = CarouselMotionTimeout;
+			device->Status.MotionResult = CarouselMotionTimeout;
 			
 			device->Interface->EventListener(device, CarouselEventTimeout, 0, 0);
 			return;
@@ -112,7 +198,7 @@ static void Handler(CarouselT* device)
 	}
 }
 //------------------------------------------------------------------------------
-static void EventListener(CarouselT* device, CarouselAdapterEventSelector selector, uint32_t args, uint32_t count)
+static void EventListener(CarouselT* device, CarouselMotorEventSelector selector, uint32_t args, uint32_t count)
 {
 	switch ((int)selector)
 	{
@@ -122,21 +208,18 @@ static void EventListener(CarouselT* device, CarouselAdapterEventSelector select
 //------------------------------------------------------------------------------
 static void Stop(CarouselT* device)
 {
-	CarouselDCMotorAdapterT* adapter = device->Adapter.Child;
-	
-	//adapter->PWM_BackwardTimer->Control1.CounterEnable = false;
-	//adapter->PWM_ForwardTimer->Control1.CounterEnable = false;
+	CarouselDCMotorAdapterT* adapter = device->Motor.Child;
 	
 	adapter->PWM_ForwardTimer->CaptureCompareOutput.Value &= ~adapter->Values.PWM_Forward.OutputEnableMask;
 	adapter->PWM_BackwardTimer->CaptureCompareOutput.Value &= ~adapter->Values.PWM_Backward.OutputEnableMask;
 	
-	device->Status.Errors = CarouselMotionNoError;
+	device->Status.MotionResult = CarouselMotionNoError;
 	device->Status.Motion = CarouselMotionStateStopped;
 }
 //------------------------------------------------------------------------------
 static xResult SetPosition(CarouselT* device, CarouselRequestSetPositionT* request)
 {
-	CarouselDCMotorAdapterT* adapter = device->Adapter.Child;
+	CarouselDCMotorAdapterT* adapter = device->Motor.Child;
 	
 	if (!device || !request)
 	{
@@ -188,7 +271,7 @@ static xResult SetPosition(CarouselT* device, CarouselRequestSetPositionT* reque
 	uint16_t power = (uint16_t)(device->Options.StartPower / 100 * adapter->Values.SelectedPWM->Timer->Period);
 	adapter->Values.AccelerationIncrement = device->Options.Acceleration / 1000;
 	
-	adapter->Values.SelectedPWM->Timer->Counter = 0;
+	//adapter->Values.SelectedPWM->Timer->Counter = 0;
 	*adapter->Values.SelectedPWM->CompareValue = power;
 	adapter->Values.SelectedPWM->Timer->CaptureCompareOutput.Value |= adapter->Values.SelectedPWM->OutputEnableMask;
 	//adapter->Values.SelectedPWM->Timer->Control1.CounterEnable = true;
@@ -199,7 +282,7 @@ static xResult SetPosition(CarouselT* device, CarouselRequestSetPositionT* reque
 //------------------------------------------------------------------------------
 static xResult SetOptions(CarouselT* device, CarouselOptionsT* request)
 {
-	CarouselDCMotorAdapterT* adapter = device->Adapter.Child;
+	CarouselDCMotorAdapterT* adapter = device->Motor.Child;
 	
 	if (!device || !request)
 	{
@@ -218,33 +301,34 @@ static xResult SetOptions(CarouselT* device, CarouselOptionsT* request)
 //------------------------------------------------------------------------------
 static xResult ResetPosition(CarouselT* device)
 {
-	CarouselDCMotorAdapterT* adapter = device->Adapter.Child;
+	CarouselDCMotorAdapterT* adapter = device->Motor.Child;
 	
 	if (device->Status.Motion == CarouselMotionStateStopped)
 	{
 		adapter->EncoderTimer->Counter = 0;
+		device->TotalAngle = 0;
 	}
 	
 	return xResultBusy;
 }
 //------------------------------------------------------------------------------
-static xResult RequestListener(CarouselT* device, CarouselAdapterRequestSelector selector, uint32_t args, uint32_t count)
+static xResult RequestListener(CarouselT* device, CarouselMotorRequestSelector selector, uint32_t args, uint32_t count)
 {
-	CarouselDCMotorAdapterT* adapter = device->Adapter.Child;
+	CarouselDCMotorAdapterT* adapter = device->Motor.Child;
 	
 	switch ((int)selector)
 	{
-		case CarouselAdapterRequestSetPosition:
+		case CarouselMotorRequestSetPosition:
 			return SetPosition(device, (CarouselRequestSetPositionT*)args);
 		
-		case CarouselAdapterRequestSetOptions:
+		case CarouselMotorRequestSetOptions:
 			return SetOptions(device, (CarouselOptionsT*)args);
 		
-		case CarouselAdapterRequestStop:
+		case CarouselMotorRequestStop:
 			Stop(device);
 			break;
 		
-		case CarouselAdapterRequestClearPosition:
+		case CarouselMotorRequestClearPosition:
 			return ResetPosition(device);
 		
 		default : return xResultRequestIsNotFound;
@@ -253,16 +337,16 @@ static xResult RequestListener(CarouselT* device, CarouselAdapterRequestSelector
 	return xResultAccept;
 }
 //------------------------------------------------------------------------------
-static uint32_t GetValue(CarouselT* device, CarouselAdapterValueSelector selector)
+static uint32_t GetValue(CarouselT* device, CarouselMotorValueSelector selector)
 {
-	CarouselDCMotorAdapterT* adapter = device->Adapter.Child;
+	CarouselDCMotorAdapterT* adapter = device->Motor.Child;
 	
 	switch ((int)selector)
 	{
-		case CarouselAdapterValueStepPosition:
+		case CarouselMotorValueStepPosition:
 			return adapter->EncoderTimer->Counter;
 		
-		case CarouselAdapterValueRequestStepPosition:
+		case CarouselMotorValueRequestStepPosition:
 			return adapter->Values.PositionRequest;
 		
 		default : break;
@@ -271,7 +355,7 @@ static uint32_t GetValue(CarouselT* device, CarouselAdapterValueSelector selecto
 	return 0;
 }
 //------------------------------------------------------------------------------
-static xResult SetValue(CarouselT* device, CarouselAdapterValueSelector selector, uint32_t value)
+static xResult SetValue(CarouselT* device, CarouselMotorValueSelector selector, uint32_t value)
 {
 	switch ((int)selector)
 	{
@@ -281,28 +365,26 @@ static xResult SetValue(CarouselT* device, CarouselAdapterValueSelector selector
 	return xResultAccept;
 }
 //==============================================================================
-static CarouselAdapterInterfaceT Interface =
+static CarouselMotorInterfaceT Interface =
 {
-	.Handler = (CarouselAdapterHandlerT)Handler,
-	.EventListener = (CarouselAdapterEventListenerT)EventListener,
-	.RequestListener = (CarouselAdapterRequestListenerT)RequestListener,
-	.GetValue = (CarouselAdapterActionGetValueT)GetValue,
-	.SetValue = (CarouselAdapterActionSetValueT)SetValue,
+	.Handler = (CarouselMotorHandlerT)Handler,
+	.EventListener = (CarouselMotorEventListenerT)EventListener,
+	.RequestListener = (CarouselMotorRequestListenerT)RequestListener,
+	.GetValue = (CarouselMotorActionGetValueT)GetValue,
+	.SetValue = (CarouselMotorActionSetValueT)SetValue,
 };
 //==============================================================================
 xResult CarouselDCMotorAdapterInit(CarouselT* carousel, CarouselDCMotorAdapterT* adapter)
 {
-	extern xResult CarouselDCMotorAdapterInterfaceInit(CarouselAdapterBaseT* adapter);
+	extern xResult CarouselDCMotorAdapterInterfaceInit(CarouselMotorBaseT* adapter);
 	
 	if (carousel && adapter)
 	{
-		carousel->Adapter.Description = "CarouselDCMotorAdapterT";
-		carousel->Adapter.Parent = carousel;
-		carousel->Adapter.Child = adapter;
-		carousel->Adapter.Interface = &Interface;
+		carousel->Motor.Description = "CarouselDCMotorAdapterT";
+		carousel->Motor.Parent = carousel;
+		carousel->Motor.Child = adapter;
+		carousel->Motor.Interface = &Interface;
 		adapter->Carousel = carousel;
-		
-		adapter->EncoderTimer->Control1.CounterEnable = true;
 		
 		adapter->Values.PWM_Backward.Timer = adapter->PWM_BackwardTimer;
 		adapter->Values.PWM_Backward.OutputEnableMask = (1 << (adapter->PWM_BackwardChannel * 4));
@@ -315,6 +397,7 @@ xResult CarouselDCMotorAdapterInit(CarouselT* carousel, CarouselDCMotorAdapterT*
 		adapter->PWM_BackwardTimer->BreakAndDeadTime.MainOutputEnable = true;
 		adapter->PWM_ForwardTimer->BreakAndDeadTime.MainOutputEnable = true;
 		
+		adapter->EncoderTimer->Control1.CounterEnable = true;
 		adapter->PWM_BackwardTimer->Control1.CounterEnable = true;
 		adapter->PWM_ForwardTimer->Control1.CounterEnable = true;
 		

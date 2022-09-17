@@ -71,7 +71,7 @@ extern const xRxTransactionT TerminalRxTransactions[];
 
 static const PacketHeaderT TransactionRequestHeader =
 {
-	.Identificator = (PacketIdentificatorT)TRANSACTION_REQUEST_IDENTIFICATOR,
+	.Identificator = { .Value = TRANSACTION_REQUEST_IDENTIFICATOR },
 	.DeviceKey = TERMINAL_DEVICE_KEY
 };
 //------------------------------------------------------------------------------

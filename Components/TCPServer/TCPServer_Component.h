@@ -6,6 +6,7 @@
  extern "C" {
 #endif 
 //==============================================================================
+#include "Components_Config.h"
 #include "TCPServer/Controls/TCPServer.h"
 //==============================================================================
 extern TCPServerT TCPServerWIZspi;

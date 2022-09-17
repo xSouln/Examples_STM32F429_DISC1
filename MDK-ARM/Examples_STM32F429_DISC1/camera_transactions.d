@@ -64,6 +64,5 @@ examples_stm32f429_disc1/camera_transactions.o: \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
-  ..\Components\Camera\Adapters\Camera_AdapterBase.h \
-  ..\Components\Camera\Controls\Camera.h \
-  ..\Components\Camera\Adapters\Camera_Adapters.h
+  ..\Components\Camera\Controls\Camera_AdapterBase.h \
+  ..\Components\Camera\Controls\Camera.h

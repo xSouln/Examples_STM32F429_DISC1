@@ -26,7 +26,7 @@ static void GetPosition(xRxRequestManagerT* manager)
 	{
 		.RequestAngle = carousel->RequestAngle,
 		.TotalAngle = carousel->TotalAngle,
-		.EncoderPosition = CarouselGetAdapterValue(carousel, CarouselAdapterValueStepPosition)
+		.EncoderPosition = CarouselGetAdapterValue(carousel, CarouselMotorValueStepPosition)
 	};
 	
 	xRxPutInResponseBuffer(manager->RxLine, &response, sizeof(response));
@@ -45,7 +45,7 @@ static void GetMotionState(xRxRequestManagerT* manager)
 		
 		.MoveTime = carousel->MoveTime,
 		
-		.EncoderPosition = CarouselGetAdapterValue(carousel, CarouselAdapterValueStepPosition)
+		.EncoderPosition = CarouselGetAdapterValue(carousel, CarouselMotorValueStepPosition)
 	};
 	
 	xRxPutInResponseBuffer(manager->RxLine, &response, sizeof(response));
@@ -83,17 +83,25 @@ static void SetCalibration(xRxRequestManagerT* manager, CarouselCalibrationT* re
 	
 	xRxPutInResponseBuffer(manager->RxLine, &result, sizeof(result));
 }
+//----------------------------------------------------------------------------
+static void SetPod(xRxRequestManagerT* manager, uint8_t* request)
+{
+	CarouselT* carousel = manager->Device;
+	int16_t result = CarouselSetPod(carousel, *request);
+	
+	xRxPutInResponseBuffer(manager->RxLine, &result, sizeof(result));
+}
 //==============================================================================
 static void TryResetPosition(xRxRequestManagerT* manager)
 {
 	CarouselT* carousel = manager->Device;
-	int16_t result = CarouselDeclareAdapterRequest(carousel, CarouselAdapterRequestClearPosition, 0, 0);
+	int16_t result = CarouselDeclareAdapterRequest(carousel, CarouselMotorRequestClearPosition, 0, 0);
 	
 	CarouselResponseTryClearPositionT response =
 	{
 		.RequestAngle = carousel->RequestAngle,
 		.TotalAngle = carousel->TotalAngle,
-		.EncoderPosition = CarouselGetAdapterValue(carousel, CarouselAdapterValueStepPosition)
+		.EncoderPosition = CarouselGetAdapterValue(carousel, CarouselMotorValueStepPosition)
 	};
 	
 	xRxPutInResponseBuffer(manager->RxLine, &result, sizeof(result));
@@ -104,6 +112,15 @@ static void TryStop(xRxRequestManagerT* manager)
 {
 	CarouselT* carousel = manager->Device;
 	int16_t result = CarouselStop(carousel);
+	
+	xRxPutInResponseBuffer(manager->RxLine, &result, sizeof(result));
+	xRxPutInResponseBuffer(manager->RxLine, &carousel->Status, sizeof(carousel->Status));
+}
+//----------------------------------------------------------------------------
+static void TryCalibrate(xRxRequestManagerT* manager)
+{
+	CarouselT* carousel = manager->Device;
+	int16_t result = CarouselCalibrateAsync(carousel);
 	
 	xRxPutInResponseBuffer(manager->RxLine, &result, sizeof(result));
 	xRxPutInResponseBuffer(manager->RxLine, &carousel->Status, sizeof(carousel->Status));
@@ -153,6 +170,11 @@ const xRxTransactionT CarouselTransactions[] =
 		.Id = CAROUSEL_SET_CALIBRATION,
 		.Action = (xRxTransactionAction)SetCalibration,
 	},
+	
+	{
+		.Id = CAROUSEL_SET_POD,
+		.Action = (xRxTransactionAction)SetPod,
+	},
 	//----------------------------------------------------------------------------
 	//TRY
 	{
@@ -163,6 +185,11 @@ const xRxTransactionT CarouselTransactions[] =
 	{
 		.Id = CAROUSEL_TRY_STOP,
 		.Action = (xRxTransactionAction)TryStop,
+	},
+	
+	{
+		.Id = CAROUSEL_TRY_CALIBRATE,
+		.Action = (xRxTransactionAction)TryCalibrate,
 	},
 	//----------------------------------------------------------------------------
 	// end of transactions marker

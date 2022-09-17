@@ -64,8 +64,8 @@ examples_stm32f429_disc1/camera_ov2640_component.o: \
   ..\Libs\Common\xRxTransaction.h ..\Libs\Common\xRxRequest.h \
   ..\Libs\Common\xRx.h \
   ..\Libs\Common\Adapters\xRxTransactionTransferAdapter.h \
-  ..\Components\Camera\Adapters\Camera_AdapterBase.h \
-  ..\Components\Camera\Adapters\Camera_Adapters.h \
+  ..\Components\Camera\Controls\Camera_AdapterBase.h \
+  ..\Components\Camera\Controls\Camera_AdapterBase.h \
   ..\Components\Camera\Adapters\OV2640\Camera_OV2640_Adapter.h \
   ..\Components\Camera\Adapters\OV2640\Camera_OV2640_AdapterTypes.h \
   ..\Components\Camera\Adapters\OV2640\Camera_OV2640_AdapterConfig.h \

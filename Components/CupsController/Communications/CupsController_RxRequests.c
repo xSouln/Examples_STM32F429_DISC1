@@ -5,7 +5,7 @@ extern const xRxTransactionT CupsControllerTransactions[];
 
 static const PacketHeaderT TransactionRequestHeader =
 {
-	.Identificator = (PacketIdentificatorT)TRANSACTION_REQUEST_IDENTIFICATOR,
+	.Identificator = { .Value = TRANSACTION_REQUEST_IDENTIFICATOR },
 	.DeviceKey = CUPS_CONTROLLER_DEVICE_KEY
 };
 //------------------------------------------------------------------------------

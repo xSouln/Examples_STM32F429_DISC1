@@ -6,6 +6,7 @@
  extern "C" {
 #endif 
 //==============================================================================
+#include "Components_Config.h"
 #include "TCPServer/Adapters/TCPServer_AdaptersTypes.h"
 #include "TCPServer_WIZspiAdapterInfo.h"
 #include "TCPServer_WIZspiAdapterConfig.h"

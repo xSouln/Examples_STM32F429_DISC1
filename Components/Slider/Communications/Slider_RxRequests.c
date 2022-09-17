@@ -1,12 +1,12 @@
 //==============================================================================
 #include "Slider_RxRequests.h"
-#include "Slider/Slider_Info.h"
+#include "Slider/Slider_Types.h"
 //==============================================================================
 extern const xRxTransactionT SliderTransactions[];
 
 static const PacketHeaderT TransactionRequestHeader =
 {
-	.Identificator = (PacketIdentificatorT)TRANSACTION_REQUEST_IDENTIFICATOR,
+	.Identificator = { .Value = TRANSACTION_REQUEST_IDENTIFICATOR },
 	.DeviceKey = SLIDER_DEVICE_KEY
 };
 //----------------------------------------------------------------------------
