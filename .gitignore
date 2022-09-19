@@ -14,6 +14,7 @@ EWARM/*/settings
 .pio
 .vscode
 .git
+*.bak
 
 Debug
 
@@ -36,6 +37,8 @@ Debug
 MDK-ARM/DebugConfig
 MDK-ARM/out
 MDK-ARM/JLinkLog.txt
+MDK-ARM/DebugConfig
+MDK-ARM/Examples_STM32F429_DISC1
 *.uvoptx
 *.uvguix
 *.uvguix.*
