@@ -14,9 +14,6 @@ examples_stm32f429_disc1/brewgroup_component.o: \
   ..\Components\BrewGroup\BrewGroup_Info.h \
   ..\Components\BrewGroup\Controls\BrewGroup_MotorBase.h \
   ..\Components\BrewGroup\Controls\BrewGroup_ThermostatBase.h \
-  ..\Components\BrewGroup\Controls\BrewGroup_WaterPumpBase.h \
-  ..\Components\BrewGroup\Adapters\DCMotor\BrewGroup_DCMotorAdapter.h \
-  ..\Components\BrewGroup\Adapters\DCMotor\BrewGroup_DCMotorAdapterTypes.h \
   ..\Components\Components_Config.h ..\Core\Inc\main.h \
   C:\STM32Cube\Repository\STM32Cube_FW_F4_V1.27.1\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h \
   ..\Core\Inc\stm32f4xx_hal_conf.h \
@@ -63,6 +60,13 @@ examples_stm32f429_disc1/brewgroup_component.o: \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_timer.h \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_uart.h \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_i2c.h \
+  ..\Components\BrewGroup\Controls\BrewGroup_WaterPumpBase.h \
+  ..\Components\BrewGroup\Controls\BrewGroup_SensorsBase.h \
+  ..\Components\BrewGroup\Adapters\Sensors\BrewGroup_SensorsAdapter.h \
+  ..\Components\BrewGroup\Adapters\Sensors\BrewGroup_SensorsAdapterTypes.h \
+  ..\Components\BrewGroup\Adapters\Sensors\BrewGroup_SensorsAdapterConfig.h \
+  ..\Components\BrewGroup\Adapters\DCMotor\BrewGroup_DCMotorAdapter.h \
+  ..\Components\BrewGroup\Adapters\DCMotor\BrewGroup_DCMotorAdapterTypes.h \
   ..\Components\BrewGroup\Adapters\DCMotor\BrewGroup_DCMotorAdapterConfig.h \
   ..\Components\BrewGroup\Adapters\Thermostat\BrewGroup_ThermostatAdapter.h \
   ..\Components\BrewGroup\Adapters\Thermostat\BrewGroup_ThermostatAdapterTypes.h \

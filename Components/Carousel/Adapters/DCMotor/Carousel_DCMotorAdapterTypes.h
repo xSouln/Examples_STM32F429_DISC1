@@ -25,33 +25,19 @@ typedef struct
 	
 	CarouselDCMotorAdapterPWM_T* SelectedPWM;
 	
-	int PositionRequest;
-	float AccelerationIncrement;
-	
 } CarouselDCMotorAdapterValuesT;
 //------------------------------------------------------------------------------
 typedef struct
 {
-	void* Carousel;
-	
 	REG_TIM_T* PWM_ForwardTimer;
 	REG_TIM_T* PWM_BackwardTimer;
 	
 	REG_TIM_T* EncoderTimer;
 	
-	GPIO_TypeDef* SensorOvercurrentPort;
-	uint32_t SensorOvercurrentPin;
-	
-	GPIO_TypeDef* SensorZeroMarkPort;
-	uint32_t SensorZeroMarkPin;
-	
 	CarouselDCMotorAdapterValuesT Values;
 	
 	struct
 	{
-		uint8_t SensorZeroMarkOnStateLogicLevel : 1;
-		uint8_t SensorOvercurrentOnStateLogicLevel : 1;
-		//uint8_t SensorZeroMarkLastState : 1;
 		uint8_t PWM_ForwardChannel : 2;
 		uint8_t PWM_BackwardChannel : 2;
 	};

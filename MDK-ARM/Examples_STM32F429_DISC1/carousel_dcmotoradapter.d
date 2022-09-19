@@ -1,6 +1,5 @@
 examples_stm32f429_disc1/carousel_dcmotoradapter.o: \
   ..\Components\Carousel\Adapters\DCMotor\Carousel_DCMotorAdapter.c \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\string.h \
   ..\Components\Carousel\Adapters\DCMotor\Carousel_DCMotorAdapter.h \
   ..\Components\Carousel\Adapters\DCMotor\Carousel_DCMotorAdapterTypes.h \
   ..\Components\Components_Config.h ..\Core\Inc\main.h \
@@ -60,4 +59,5 @@ examples_stm32f429_disc1/carousel_dcmotoradapter.o: \
   ..\Components\Carousel\Adapters\DCMotor\Carousel_DCMotorAdapterConfig.h \
   ..\Components\Carousel\Carousel_Types.h \
   ..\Components\Carousel\Carousel_Config.h \
-  ..\Components\Carousel\Carousel_Info.h
+  ..\Components\Carousel\Carousel_Info.h \
+  ..\Components\Carousel\Controls\Carousel_SensorsBase.h

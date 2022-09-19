@@ -22,6 +22,7 @@ typedef enum
 	CUPS_CONTROLLER_SET_PIXELS_STATE,
 	CUPS_CONTROLLER_SET_COLOR,
 	CUPS_CONTROLLER_SET_TEMPLATE,
+	CUPS_CONTROLLER_SET_TEMPLATE_BY_ID,
 
 	CUPS_CONTROLLER_TRY = 2000,
 	CUPS_CONTROLLER_TRY_DRAWING_START,
@@ -41,10 +42,10 @@ typedef struct
 //------------------------------------------------------------------------------
 typedef struct
 {
-	uint8_t CupSelector;
-	uint8_t TemplaetSelector;
+	CupSelector CupSelector;
+	CupTemplateIdSelector TemplaetIdSelector;
 	
-} CupsControllerRequestSetTemplaetT;
+} CupsControllerRequestSetTemplaetByIdT;
 //==============================================================================
 #ifdef __cplusplus
 }

@@ -11,7 +11,17 @@ extern "C" {
 //==============================================================================
 typedef struct
 {
-	uint32_t SensorPin;
+	GPIO_TypeDef* TermostatEnablePort;
+	uint32_t TermostatEnablePin;
+	
+	REG_TIM_T* WaterFlowMeterTimer;
+	
+	ADC_HandleTypeDef* Adc;
+	
+	struct
+	{
+		uint8_t TermostatEnableOnStateLogicLevel : 1;
+	};
 	
 } BrewGroupTermostatAdapterT;
 //==============================================================================

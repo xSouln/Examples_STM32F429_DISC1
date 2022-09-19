@@ -3,57 +3,176 @@
 #include <math.h>
 #include "Carousel.h"
 //==============================================================================
-//------------------------------------------------------------------------------
-uint32_t CarouselGetAdapterValue(CarouselT* carousel, CarouselMotorValueSelector selector)
-{
-	return carousel->Motor.Interface->GetValue(carousel, selector);
-}
-//------------------------------------------------------------------------------
-uint32_t CarouselSetAdapterValue(CarouselT* carousel, CarouselMotorValueSelector selector, uint32_t value)
-{
-	return carousel->Motor.Interface->SetValue(carousel, selector, value);
-}
-//------------------------------------------------------------------------------
-xResult CarouselDeclareAdapterRequest(CarouselT* carousel, CarouselMotorRequestSelector selector, uint32_t args, uint32_t count)
-{
-	return carousel->Motor.Interface->RequestListener(carousel, selector, args, count);
-}
-//------------------------------------------------------------------------------
-void CarouselDeclareAdapterEvent(CarouselT* carousel, CarouselMotorEventSelector selector, uint32_t args, uint32_t count)
-{
-	carousel->Motor.Interface->EventListener(carousel, selector, args, count);
-}
-//------------------------------------------------------------------------------
+extern void CarouselSensorsHandler(CarouselT* device);
+extern void CarouselMotorDisable(CarouselT* device);
+extern void CarouselMotorHandler(CarouselT* device);
 //==============================================================================
-void CarouselHandler(CarouselT* carousel)
+static void CarouselUpdateSensors(CarouselT* device)
 {
-	carousel->Motor.Interface->Handler(carousel);
+	device->Sensors.Interface.Handler(device);
 }
 //==============================================================================
-xResult CarouselSetOptions(CarouselT* carousel, CarouselOptionsT* request)
+xResult CarouselResetPosition(CarouselT* device)
 {
-	if (carousel->Status.Motion == CarouselMotionStateStopped)
+	if (device->Status.Motion == CarouselMotionStateStopped)
 	{
-		if (carousel->Motor.Interface->RequestListener(carousel,
-				CarouselMotorRequestSetOptions,
-				(uint32_t)request, 0) == xResultAccept)
-		{
-			memcpy(&carousel->Options, request, sizeof(carousel->Options));
-			return xResultAccept;
-		}
+		device->Motor.Interface->SetValue(device, CarouselMotorValueEncoderPosition, 0);
+		device->TotalAngle = 0;
 		
-		return xResultError;
+		return xResultAccept;
 	}
 	
 	return xResultBusy;
 }
 //------------------------------------------------------------------------------
-xResult CarouselSetPosition(CarouselT* carousel, CarouselRequestSetPositionT* request)
+xResult CarouselStop(CarouselT* device)
 {
-	return carousel->Motor.Interface->RequestListener(carousel,
-																										CarouselMotorRequestSetPosition,
-																										(uint32_t)request,
-																										0);
+	CarouselMotorDisable(device);
+	
+	if (device->Status.Calibration == CarouselCalibratinStatusCalibrating)
+	{
+		device->Status.Calibration = CarouselCalibratinStatusBreak;
+		device->Status.CalibrationState = CarouselCalibratinStateIdle;
+	}
+	
+	return xResultAccept;
+}
+//------------------------------------------------------------------------------
+xResult CarouselSetPosition(CarouselT* device, CarouselRequestSetPositionT* request)
+{
+	if (!device || !request)
+	{
+		return xResultLinkError;
+	}
+	
+	if (device->Status.Motion != CarouselMotionStateStopped)
+	{
+		return xResultBusy;
+	}
+	
+	device->Sensors.Interface.Handler(device);
+	
+	if (device->Sensors.State.Overcurrent)
+	{
+		return xResultError;
+	}
+	
+	CarouselMotorDisable(device);
+	
+	device->RequestAngle = request->Angle;
+	
+	CarouselMotorRequestT motor_request =
+	{
+		.Position = (int)(request->Angle * device->Calibration.Position),
+		.Power = request->Power,
+		.TimeOut = request->Timeout,
+		.Mode = request->Mode,
+	};
+	
+	return device->Motor.Interface->RequestListener(device, CarouselMotorRequestMoveStart, (uint32_t)&motor_request, 0);
+}
+//------------------------------------------------------------------------------
+static void CarouselCalibrationHandler(CarouselT* device)
+{
+	if (device->Status.Calibration == CarouselCalibratinStatusCalibrating
+		&& device->Status.Motion == CarouselMotionStateStopped)
+	{
+		if (device->Status.MotionResult != CarouselMotionNoError)
+		{
+			device->Status.Calibration = CarouselCalibratinStatusError;
+			device->Status.CalibrationState = CarouselCalibratinStateIdle;
+			device->Interface->EventListener(device, CarouselEventCalibrationError, 0, 0);
+			return;
+		}
+		
+		CarouselRequestSetPositionT request;
+		
+		switch(device->Status.CalibrationState)
+		{
+			case CarouselCalibratinStateFindZeroMark:
+				device->Status.CalibrationState = CarouselCalibratinStateMoveOutAtZeroMarkAndResetSteps;
+				request.Angle = 10000;
+				request.Mode = CarouselMotorModeMoveOutAtZeroMark;
+				request.Power = 30.0;
+				request.Timeout = 60000;
+				CarouselSetPosition(device, &request);
+				return;
+			
+			case CarouselCalibratinStateMoveOutAtZeroMarkAndResetSteps:
+				device->Status.CalibrationState = CarouselCalibratinStateFindZeroMarkBackSide;
+				request.Angle = 10000;
+				request.Mode = CarouselMotorModeFindZeroMark;
+				request.Power = 80.0;
+				request.Timeout = 60000;
+				CarouselResetPosition(device);
+				CarouselSetPosition(device, &request);
+				return;
+			
+			case CarouselCalibratinStateFindZeroMarkBackSide:
+				device->Status.CalibrationState = CarouselCalibratinStateMoveOutAtZeroMarkAndCalibrate;
+				request.Angle = 10000;
+				request.Mode = CarouselMotorModeMoveOutAtZeroMark;
+				request.Power = 30.0;
+				request.Timeout = 60000;
+				CarouselSetPosition(device, &request);
+				return;
+		}
+		
+		device->Status.Calibration = CarouselCalibratinStatusColibated;
+		device->Status.CalibrationState = CarouselCalibratinStateIdle;
+		
+		device->Calibration.Position = ((float)device->Motor.EncoderPosition / 360.0);
+		CarouselResetPosition(device);
+		
+		device->TotalAngle = 0;
+		
+		device->Interface->EventListener(device, CarouselEventCalibrationComplete, 0, 0);
+		
+		request.Angle = device->Calibration.Offset;
+		request.Power = 40.0;
+		request.Mode = 0;
+		request.Timeout = (uint32_t)(device->Calibration.Offset * 3000);
+		
+		CarouselSetPosition(device, &request);
+	}
+}
+//------------------------------------------------------------------------------
+void CarouselHandler(CarouselT* device)
+{
+	device->LastStatus.Value = device->Status.Value;
+	
+	CarouselSensorsHandler(device);
+	CarouselMotorHandler(device);
+	
+	device->Status.Sensors = device->Sensors.State.Value;
+	device->TotalAngle = device->Motor.EncoderPosition / device->Calibration.Position;
+	
+	if (device->Status.Motion == CarouselMotionStateStopped)
+	{
+		CarouselCalibrationHandler(device);
+	}
+	
+	if (device->LastStatus.Value != device->Status.Value)
+	{
+		device->Interface->EventListener(device, CarouselEventStatusChanged, 0, 0);
+	}
+}
+//==============================================================================
+xResult CarouselSetOptions(CarouselT* device, CarouselMotorOptionsT* request)
+{
+	if (!device || !request)
+	{
+		return xResultLinkError;
+	}
+	
+	if (device->Status.Motion == CarouselMotionStateStopped)
+	{
+		memcpy(&device->Motor.Options, request, sizeof(device->Motor.Options));
+		
+		return xResultAccept;
+	}
+	
+	return xResultBusy;
 }
 //------------------------------------------------------------------------------
 xResult CarouselSetColibration(CarouselT* carousel, CarouselCalibrationT* request)
@@ -63,19 +182,6 @@ xResult CarouselSetColibration(CarouselT* carousel, CarouselCalibrationT* reques
 		memcpy(&carousel->Calibration, request, sizeof(carousel->Calibration));
 		
 		return xResultAccept;
-	}
-	
-	return xResultBusy;
-}
-//------------------------------------------------------------------------------
-xResult CarouselResetPosition(CarouselT* carousel)
-{
-	if (carousel->Status.Motion == CarouselMotionStateStopped)
-	{
-		return carousel->Motor.Interface->RequestListener(carousel,
-																											CarouselMotorRequestClearPosition,
-																											0,
-																											0);
 	}
 	
 	return xResultBusy;
@@ -95,7 +201,7 @@ xResult CarouselCalibrateAsync(CarouselT* carousel)
 		request.Angle = -10000;
 		request.Power = 80.0;
 		request.Timeout = 60000;
-		request.Mode = CarouselSetPositionModeStopAtZeroMark;
+		request.Mode = CarouselMotorModeStopAtZeroMark;
 		
 		CarouselResetPosition(carousel);
 		CarouselSetPosition(carousel, &request);
@@ -146,21 +252,14 @@ xResult CarouselSetPod(CarouselT* carousel, uint8_t number)
 	CarouselRequestSetPositionT request =
 	{
 		.Angle = angle,
-		.Power = carousel->Options.Power,
+		.Power = carousel->Motor.Options.Power,
 		.Timeout = 60000
 	};
 	
-	return CarouselSetPosition(carousel, &request);
-}
-//------------------------------------------------------------------------------
-xResult CarouselStop(CarouselT* carousel)
-{
-	carousel->Motor.Interface->RequestListener(carousel,
-																							CarouselMotorRequestStop,
-																							0,
-																							0);
+	xResult result = CarouselSetPosition(carousel, &request);
+	carousel->RequestPod = number;
 	
-	return xResultAccept;
+	return result;
 }
 //==============================================================================
 xResult CarouselInit(CarouselT* carousel, void* parent, CarouselInterfaceT* interface)
@@ -176,11 +275,11 @@ xResult CarouselInit(CarouselT* carousel, void* parent, CarouselInterfaceT* inte
 		carousel->Calibration.Position = CAROUSEL_DEFAULT_POSITION_CALIBRATION_VALUE;
 		carousel->Calibration.Offset = CAROUSEL_DEFAULT_POSITION_OFFSET;
 		
-		carousel->Options.StartPower = CAROUSEL_DEFAULT_MOVE_STAR_POWER;
-		carousel->Options.StopPower = CAROUSEL_DEFAULT_MOVE_STOP_POWER;
-		carousel->Options.Acceleration = CAROUSEL_DEFAULT_MOVE_ACCELERATION;
-		carousel->Options.Deceleration = CAROUSEL_DEFAULT_MOVE_DECCELERATION;
-		carousel->Options.Power = CAROUSEL_DEFAULT_MOVE_POWER;
+		carousel->Motor.Options.StartPower = CAROUSEL_DEFAULT_MOVE_STAR_POWER;
+		carousel->Motor.Options.StopPower = CAROUSEL_DEFAULT_MOVE_STOP_POWER;
+		carousel->Motor.Options.Acceleration = CAROUSEL_DEFAULT_MOVE_ACCELERATION;
+		carousel->Motor.Options.Deceleration = CAROUSEL_DEFAULT_MOVE_DECCELERATION;
+		carousel->Motor.Options.Power = CAROUSEL_DEFAULT_MOVE_POWER;
 		
 		carousel->Requests = (xRxRequestT*)CarouselRequests;
 		

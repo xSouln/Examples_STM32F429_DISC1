@@ -58,11 +58,13 @@ examples_stm32f429_disc1/slider_component.o: \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_i2c.h \
   ..\Components\Slider\Slider_Config.h \
   ..\Components\Slider\Slider_Info.h \
-  ..\Components\Slider\Adapters\Slider_AdapterBase.h \
-  ..\Components\Slider\Adapters\Slider_Adapters.h \
+  ..\Components\Slider\Controls\Slider_MotorBase.h \
+  ..\Components\Slider\Controls\Slider_SensorsBase.h \
   ..\Components\Slider\Adapters\DCMotor\Slider_DCMotorAdapter.h \
   ..\Components\Slider\Adapters\DCMotor\Slider_DCMotorAdapterTypes.h \
-  ..\Components\Slider\Adapters\Slider_AdapterBase.h \
   ..\Components\Slider\Adapters\DCMotor\Slider_DCMotorAdapterConfig.h \
+  ..\Components\Slider\Adapters\Sensors\Slider_SensorsAdapter.h \
+  ..\Components\Slider\Adapters\Sensors\Slider_SensorsAdapterTypes.h \
+  ..\Components\Slider\Adapters\Sensors\Slider_SensorsAdapterConfig.h \
   ..\Components\Slider\Communications\Slider_RxTransactions.h \
   ..\Components\Slider\Slider_Info.h

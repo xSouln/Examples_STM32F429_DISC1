@@ -2,7 +2,7 @@ examples_stm32f429_disc1/slider_dcmotoradapter.o: \
   ..\Components\Slider\Adapters\DCMotor\Slider_DCMotorAdapter.c \
   ..\Components\Slider\Adapters\DCMotor\Slider_DCMotorAdapter.h \
   ..\Components\Slider\Adapters\DCMotor\Slider_DCMotorAdapterTypes.h \
-  ..\Components\Slider\Adapters\Slider_AdapterBase.h \
+  ..\Components\Slider\Controls\Slider_MotorBase.h \
   ..\Libs\Common\xTypes.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
@@ -60,4 +60,5 @@ examples_stm32f429_disc1/slider_dcmotoradapter.o: \
   ..\Components\Slider\Slider_Types.h \
   ..\Components\Slider\Slider_Config.h \
   ..\Components\Slider\Slider_Info.h \
+  ..\Components\Slider\Controls\Slider_SensorsBase.h \
   ..\Components\Slider\Controls\Slider.h

@@ -10,7 +10,8 @@
 #include "Common/xRxTransaction.h"
 #include "Components_Config.h"
 #include "Slider_Config.h"
-#include "Adapters/Slider_AdapterBase.h"
+#include "Slider/Controls/Slider_MotorBase.h"
+#include "Slider/Controls/Slider_SensorsBase.h"
 //==============================================================================
 typedef enum
 {
@@ -19,7 +20,8 @@ typedef enum
 	SliderEventStartMove,
 	SliderEventClose,
 	SliderEventTimeout,
-	SliderEventOvercurrent
+	SliderEventOvercurrent,
+	SliderEventStatusChanged
 	
 } SliderEventSelector;
 //------------------------------------------------------------------------------
@@ -54,55 +56,32 @@ typedef struct
 //==============================================================================
 typedef enum
 {
-	SliderMotionNoError,
-	SliderPositionSettingTimeout,
-	SliderOvercurrent,
-	
-} SliderMotionErrors;
-//------------------------------------------------------------------------------
-typedef enum
-{
 	SliderStateIdle,
 	SliderStateOpening,
-	SliderStateClosing,
 	SliderStateIsOpen,
-	SliderStateIsClose
+	SliderStateClosing,
+	SliderStateMoveOffTheSensor,
+	SliderStateRealised
 	
 } SliderStates;
 //------------------------------------------------------------------------------
 typedef enum
 {
-	SliderSensorClose = 1 << 0,
-	SliderSensorOpen = 1 << 1,
-	SliderSensorOvercurrent = 1 << 2
+	SliderResultNoError,
+	SliderResultTimeout,
+	SliderResultOvercurrent,
+	SliderResultBreak
 	
-} SliderSensors;
+} SliderResults;
 //------------------------------------------------------------------------------
 typedef union
 {
 	struct
 	{
-		SliderSensors Close : 1;
-		SliderSensors Open : 1;
-		SliderSensors Overcurrent : 1;
-	};
-	
-	SliderSensors Value;
-	
-} SliderSensorsT;
-//------------------------------------------------------------------------------
-typedef union
-{
-	struct
-	{
-		SliderSensors Sensors : 4;
+		uint32_t State : 4; //SliderStates
+		uint32_t Result : 4; //SliderMotionResult
 		
-		SliderStates State : 4;
-		SliderMotionErrors Errors : 4;
-		
-		xResult InitResult : 4;
-		xResult DriverInitResult : 4;
-		xResult AdapterInitResult : 4;
+		uint32_t InitResult : 4;
 	};
 	
 	uint32_t Value;
@@ -111,36 +90,16 @@ typedef union
 //------------------------------------------------------------------------------
 typedef struct
 {
-	uint16_t Acceleration;
-	uint16_t StartPower;
-	
-} SliderOptionsT;
-//------------------------------------------------------------------------------
-typedef struct
-{
-	uint16_t TotalPower;
-	uint16_t RequestPower;
-	uint32_t MoveTime;
-	
-} SliderValuesT;
-//------------------------------------------------------------------------------
-typedef struct
-{
-	uint16_t Power;
-	uint32_t TimeOut;
-	
-} SliderMoveRequestT;
-//------------------------------------------------------------------------------
-typedef struct
-{
 	OBJECT_HEADER;
 	
-	SliderAdapterBaseT Adapter;
 	SliderInterfaceT* Interface;
 	
+	SliderMotorBaseT Motor;
+	SliderSensorsBaseT Sensors;
+	
 	SliderStatusT Status;
-	SliderOptionsT Options;
-	SliderValuesT Values;
+	
+	uint32_t OpenTime;
 	
 	xRxRequestT* Requests;
 	xRxT* RxLine;

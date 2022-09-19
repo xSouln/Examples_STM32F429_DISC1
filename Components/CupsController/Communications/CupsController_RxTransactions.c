@@ -18,10 +18,11 @@ static void SetColor(xRxRequestManagerT* manager, CupsControllerRequestSetColorT
 	xRxPutInResponseBuffer(manager->RxLine, &result, sizeof(result));
 }
 //----------------------------------------------------------------------------
-static void SetTemplaet(xRxRequestManagerT* manager, CupsControllerRequestSetTemplaetT* request)
+static void SetTemplateById(xRxRequestManagerT* manager, CupsControllerRequestSetTemplaetByIdT* request)
 {
+	uint16_t result = CupsControllerSetTemplateById(request->CupSelector, request->TemplaetIdSelector);
 	
-	//xRxPutInResponseBuffer(manager->RxLine, &result, sizeof(result));
+	xRxPutInResponseBuffer(manager->RxLine, &result, sizeof(result));
 }
 //==============================================================================
 static void GetStatus(xRxRequestManagerT* manager)
@@ -63,8 +64,8 @@ const xRxTransactionT CupsControllerTransactions[] =
 	},
 	
 	{
-		.Id = CUPS_CONTROLLER_SET_TEMPLATE,
-		.Action = (xRxTransactionAction)SetColor,
+		.Id = CUPS_CONTROLLER_SET_TEMPLATE_BY_ID,
+		.Action = (xRxTransactionAction)SetTemplateById,
 	},
 	//----------------------------------------------------------------------------
 	//----------------------------------------------------------------------------

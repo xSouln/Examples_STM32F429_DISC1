@@ -18,24 +18,27 @@ typedef enum
 typedef enum
 {
 	CarouselMotorRequestIdle,
-	CarouselMotorRequestSetPosition,
-	CarouselMotorRequestSetOptions,
-	CarouselMotorRequestClearPosition,
-	CarouselMotorRequestStop,
-	CarouselMotorRequestDelay
+	CarouselMotorRequestMoveStart,
+	CarouselMotorRequestMoveStope,
+	CarouselMotorRequestSetPower,
 	
 } CarouselMotorRequestSelector;
 //------------------------------------------------------------------------------
 typedef enum
 {
-	CarouselMotorValueIdle,
-	CarouselMotorValueMotionState,
-	CarouselMotorValueOptions,
-	CarouselMotorValueMoveTime,
-	CarouselMotorValueStepPosition,
-	CarouselMotorValueRequestStepPosition,
+	CarouselMotorValueIdle,	
+	CarouselMotorValueEncoderPosition,
+	CarouselMotorValueMoveDiraction
 	
 } CarouselMotorValueSelector;
+//------------------------------------------------------------------------------
+typedef enum
+{
+	CarouselMotorMoveStopped,
+	CarouselMotorMoveForward,
+	CarouselMotorMoveBackward
+	
+} CarouselMotorMoveDiraction;
 //------------------------------------------------------------------------------
 typedef void (*CarouselMotorHandlerT)(void* device);
 
@@ -57,12 +60,81 @@ typedef struct
 	
 } CarouselMotorInterfaceT;
 //------------------------------------------------------------------------------
+typedef enum
+{
+	CarouselMotionNoError,
+	CarouselMotionTimeout,
+	CarouselMotionOvercurrent,
+	
+} CarouselMotionResult;
+//------------------------------------------------------------------------------
+typedef enum
+{
+	CarouselMotionStateStopped,
+	CarouselMotionStateMovingForward,
+	CarouselMotionStateMovingBackward,
+	
+} CarouselMotionStatus;
+//------------------------------------------------------------------------------
+typedef enum
+{
+	CarouselMotorModeCommomActionIdle,
+	CarouselMotorModeStopAtZeroMark,
+	CarouselMotorModeMoveOutAtZeroMark,
+	CarouselMotorModeFindZeroMark,
+	
+} CarouselMotorModes;
+//------------------------------------------------------------------------------
+typedef enum
+{
+	CarouselMotorDiractionForward,
+	CarouselMotorDiractionBackward,
+	
+} CarouselMotorDiractions;
+//------------------------------------------------------------------------------
+typedef struct
+{
+	float Power;
+	int Position;
+	uint32_t TimeOut;
+	uint32_t Mode;
+	
+} CarouselMotorRequestT;
+//------------------------------------------------------------------------------
+typedef struct
+{
+	float Acceleration;
+	float Deceleration;
+	
+	float StartPower;
+	float StopPower;
+	
+	float Power;
+	
+} CarouselMotorOptionsT;
+//------------------------------------------------------------------------------
 typedef struct
 {
 	OBJECT_HEADER;
 	
 	void* Child;
 	CarouselMotorInterfaceT* Interface;
+	
+	CarouselMotorOptionsT Options;
+	float AccelerationIncrement;
+	
+	float TotalPower;
+	float RequestPower;
+	
+	uint32_t Mode;
+	
+	CarouselMotorDiractions Diraction;
+	
+	int EncoderPosition;
+	int RequestEncoderPosition;
+	
+	uint32_t MoveTime;
+	uint32_t TimeOut;
 	
 } CarouselMotorBaseT;
 //==============================================================================

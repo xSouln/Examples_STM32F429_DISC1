@@ -57,4 +57,5 @@ examples_stm32f429_disc1/slider.o: ..\Components\Slider\Controls\Slider.c \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_i2c.h \
   ..\Components\Slider\Slider_Config.h \
   ..\Components\Slider\Slider_Info.h \
-  ..\Components\Slider\Adapters\Slider_AdapterBase.h
+  ..\Components\Slider\Controls\Slider_MotorBase.h \
+  ..\Components\Slider\Controls\Slider_SensorsBase.h

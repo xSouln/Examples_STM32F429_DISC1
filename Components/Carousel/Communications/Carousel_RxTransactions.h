@@ -31,6 +31,7 @@ typedef enum
 	CAROUSEL_TRY_CALIBRATE,
 
 	CAROUSEL_EVT = 10000,
+	CAROUSEL_EVT_STATUS_CHANGED
 	
 } CAROUSEL_TRANSACTIONS;
 //==============================================================================

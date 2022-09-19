@@ -12,15 +12,13 @@ xResult SliderInit(SliderT* Slider, void* parent, SliderInterfaceT* interface);
 
 void SliderHandler(SliderT* Slider);
 
-uint32_t SliderGetAdapterValue(SliderT* Slider, SliderAdapterValueSelector selector);
-uint32_t SliderSetAdapterValue(SliderT* Slider, SliderAdapterValueSelector selector, uint32_t value);
-xResult SliderDeclareAdapterRequest(SliderT* Slider, SliderAdapterRequestSelector selector, uint32_t args, uint32_t count);
-void SliderDeclareAdapterEvent(SliderT* Slider, SliderAdapterEventSelector selector, uint32_t args, uint32_t count);
+xResult SliderSetPosition(SliderT* device, SliderMoveRequestT* request);
+xResult SliderOpen(SliderT* Slider);
+xResult SliderClose(SliderT* Slider);
+void SliderStop(SliderT* Slider);
 
-xResult SliderOpen(SliderT* Slider, SliderMoveRequestT* request);
-xResult SliderClose(SliderT* Slider, SliderMoveRequestT* request);
-xResult SliderStop(SliderT* Slider);
-xResult SliderSetOptions(SliderT* Slider, SliderOptionsT* request);
+xResult SliderSetOptions(SliderT* Slider, SliderMotorOptionsT* request);
+xResult SliderDropPod(SliderT* device, uint32_t open_time);
 //==============================================================================
 #ifdef __cplusplus
 }

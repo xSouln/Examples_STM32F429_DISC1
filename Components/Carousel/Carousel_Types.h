@@ -11,6 +11,7 @@
 #include "Carousel_Config.h"
 #include "Components_Config.h"
 #include "Carousel/Controls/Carousel_MotorBase.h"
+#include "Carousel/Controls/Carousel_SensorsBase.h"
 //==============================================================================
 typedef enum
 {
@@ -21,6 +22,7 @@ typedef enum
 	CarouselEventCalibrationError,
 	CarouselEventTimeout,
 	CarouselEventOvercurrent,
+	CarouselEventStatusChanged
 	
 } CarouselEventSelector;
 //------------------------------------------------------------------------------
@@ -53,28 +55,7 @@ typedef struct
 	
 } CarouselInterfaceT;
 //==============================================================================
-typedef struct
-{
-	float Acceleration;
-	float Deceleration;
-	
-	float StartPower;
-	float StopPower;
-	
-	float Power;
-	
-} CarouselOptionsT;
-//------------------------------------------------------------------------------
-typedef CarouselOptionsT CarouselRequestSetOptionsT;
-//------------------------------------------------------------------------------
-typedef enum
-{
-	CarouselSetPositionModeCommomActionIdle,
-	CarouselSetPositionModeStopAtZeroMark,
-	CarouselSetPositionModeMoveOutAtZeroMark,
-	CarouselSetPositionModeFindZeroMark,
-	
-} CarouselSetPositionModes;
+typedef CarouselMotorOptionsT CarouselRequestSetOptionsT;
 //------------------------------------------------------------------------------
 typedef struct
 {
@@ -89,33 +70,11 @@ typedef struct
 //------------------------------------------------------------------------------
 typedef enum
 {
-	CarouselMotionNoError,
-	CarouselMotionTimeout,
-	CarouselMotionOvercurrent,
-	
-} CarouselMotionResult;
-//------------------------------------------------------------------------------
-typedef enum
-{
-	CarouselMotionStateStopped,
-	CarouselMotionStateMovingForward,
-	CarouselMotionStateMovingBackward,
-	
-} CarouselMotionStatus;
-//------------------------------------------------------------------------------
-typedef enum
-{
-	CarouselSensorZeroMark = 1 << 0,
-	CarouselSensorOvercurrent = 1 << 1
-	
-} CarouselSensors;
-//------------------------------------------------------------------------------
-typedef enum
-{
 	CarouselCalibratinStatusNotColibated,
 	CarouselCalibratinStatusCalibrating,
 	CarouselCalibratinStatusColibated,
-	CarouselCalibratinStatusError
+	CarouselCalibratinStatusError,
+	CarouselCalibratinStatusBreak,
 	
 } CarouselCalibratinStatus;
 //------------------------------------------------------------------------------
@@ -133,32 +92,18 @@ typedef union
 {
 	struct
 	{
-		uint8_t ZeroMark : 1;
-		uint8_t Overcurrent : 1;
+		uint32_t Sensors : 2; //CarouselSensors
+		
+		uint32_t Motion : 4; //CarouselMotionStates
+		uint32_t MotionResult : 4; //CarouselMotionErrors
+		
+		uint32_t Calibration : 4; //CarouselCalibratinStatus
+		uint32_t CalibrationState : 4;
+		
+		uint32_t InitResult : 4; //xResult
 	};
 	
-	uint8_t Value;
-	
-} CarouselSensorsT;
-//------------------------------------------------------------------------------
-typedef union
-{
-	struct
-	{
-		uint64_t Sensors : 2; //CarouselSensors
-		
-		uint64_t Motion : 4; //CarouselMotionStates
-		uint64_t MotionResult : 4; //CarouselMotionErrors
-		
-		uint64_t Calibration : 2; //CarouselCalibratinStatus
-		uint64_t CalibrationState : 4;
-		
-		uint64_t LastSensorsState : 2;
-		
-		uint64_t InitResult : 4; //xResult
-	};
-	
-	uint64_t Value;
+	uint32_t Value;
 	
 } CarouselStatusT;
 //------------------------------------------------------------------------------
@@ -174,25 +119,23 @@ typedef struct
 	OBJECT_HEADER;
 	
 	CarouselInterfaceT* Interface;
+	
 	CarouselMotorBaseT Motor;
+	CarouselSensorsBaseT Sensors;
 	
 	CarouselStatusT Status;
+	CarouselStatusT LastStatus;
 	
-	CarouselOptionsT Options;
 	CarouselCalibrationT Calibration;
 	
 	float TotalAngle;
 	float RequestAngle;
 	
-	float TotalPower;
-	float RequestPower;
-	
-	uint32_t Mode;
-	
-	uint32_t MoveTime;
-	uint32_t TimeOut;
+	int8_t TotalPod;
+	int8_t RequestPod;
 	
 	xRxRequestT* Requests;
+	xRxT* RxLine;
 	
 } CarouselT;
 //==============================================================================

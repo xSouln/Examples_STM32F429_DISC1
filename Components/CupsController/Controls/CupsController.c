@@ -10,7 +10,34 @@ void CupsControllerHandler()
 	CupsControllerUpdateLayout(Cup1|Cup2, 1000);
 }
 //------------------------------------------------------------------------------
-static xResult CupsControllerSetTemplate(CupSelector cups, CupDrawingTemplateT* pattern)
+xResult CupsControllerSetTemplateById(CupSelector cups, CupTemplateIdSelector id)
+{
+	uint8_t request = cups;
+	uint8_t i = 0;
+	
+	if (id < CUPS_CONTROLLER_LED_TEMOLATES_COUNT)
+	{
+		while (request && i < CupsCount)
+		{
+			if ((request & 0x01))
+			{
+				WS2812_DrawingStop(&CupsController.Cups[i].Driver.DrawManager);
+				CupsControllerDrawManagerInit(&CupsController.Cups[i], (CupDrawingTemplateT*)DrawingTemplates[id]);
+				CupDrawManagerSetTemplate(&CupsController.Cups[i], (CupDrawingTemplateT*)DrawingTemplates[id]);
+				WS2812_DrawingStart(&CupsController.Cups[i].Driver.DrawManager);
+			}
+			
+			request >>= 1;
+			i++;
+		}
+		
+		return xResultAccept;
+	}
+	
+	return xResultError;
+}
+//------------------------------------------------------------------------------
+xResult CupsControllerSetTemplate(CupSelector cups, CupDrawingTemplateT* pattern)
 {
 	uint8_t request = cups;
 	uint8_t i = 0;
@@ -43,6 +70,10 @@ xResult CupsControllerSetColor(CupSelector cups, CupLEDColorT color)
 	{
 		if (request & 0x01)
 		{
+			if (CupsController.Cups[i].Driver.DrawManager.Status.DrawingIsEnable)
+			{
+				WS2812_DrawingStop(&CupsController.Cups[i].Driver.DrawManager);
+			}
 			WS2812_FillPixels(&CupsController.Cups[i].Driver, color, 0, CupsController.Cups[i].PixelsCount);
 		}
 		

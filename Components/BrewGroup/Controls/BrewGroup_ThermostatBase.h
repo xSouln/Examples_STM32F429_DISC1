@@ -7,6 +7,7 @@ extern "C" {
 #endif
 //==============================================================================
 #include "Common/xTypes.h"
+#include "Components_Config.h"
 //==============================================================================
 typedef enum
 {
@@ -17,22 +18,12 @@ typedef enum
 typedef enum
 {
 	BrewGroupTermostatRequestIdle,
-	BrewGroupTermostatRequestSetPosition,
-	BrewGroupTermostatRequestSetOptions,
-	BrewGroupTermostatRequestClearPosition,
-	BrewGroupTermostatRequestStop,
-	BrewGroupTermostatRequestDelay
 	
 } BrewGroupTermostatRequestSelector;
 //------------------------------------------------------------------------------
 typedef enum
 {
 	BrewGroupTermostatValueIdle,
-	BrewGroupTermostatValueMotionState,
-	BrewGroupTermostatValueOptions,
-	BrewGroupTermostatValueMoveTime,
-	BrewGroupTermostatValueStepPosition,
-	BrewGroupTermostatValueRequestStepPosition,
 	
 } BrewGroupTermostatValueSelector;
 //------------------------------------------------------------------------------
@@ -56,12 +47,34 @@ typedef struct
 	
 } BrewGroupTermostatInterfaceT;
 //------------------------------------------------------------------------------
+typedef union
+{
+	struct
+	{
+		uint32_t IsEnable : 1;
+	};
+	
+	uint32_t Value;
+	
+} BrewGroupTermostatStatusT;
+//------------------------------------------------------------------------------
+typedef struct
+{
+	float Level;
+	
+} BrewGroupTermostatOptionsT;
+//------------------------------------------------------------------------------
 typedef struct
 {
 	OBJECT_HEADER;
 	
 	void* Child;
 	BrewGroupTermostatInterfaceT Interface;
+	
+	BrewGroupTermostatOptionsT Options;
+	
+	float TotalTemperature;
+	float RequestTemperature;
 	
 } BrewGroupTermostatBaseT;
 //==============================================================================

@@ -58,6 +58,11 @@ examples_stm32f429_disc1/carousel_component.o: \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_uart.h \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_i2c.h \
   ..\Components\Carousel\Controls\Carousel_MotorBase.h \
+  ..\Components\Carousel\Controls\Carousel_SensorsBase.h \
   ..\Components\Carousel\Adapters\DCMotor\Carousel_DCMotorAdapter.h \
   ..\Components\Carousel\Adapters\DCMotor\Carousel_DCMotorAdapterTypes.h \
-  ..\Components\Carousel\Adapters\DCMotor\Carousel_DCMotorAdapterConfig.h
+  ..\Components\Carousel\Adapters\DCMotor\Carousel_DCMotorAdapterConfig.h \
+  ..\Components\Carousel\Adapters\Sensors\Carousel_SensorsAdapter.h \
+  ..\Components\Carousel\Adapters\Sensors\Carousel_SensorsAdapterTypes.h \
+  ..\Components\Carousel\Adapters\Sensors\Carousel_SensorsAdapterConfig.h \
+  ..\Components\Carousel\Communications\Carousel_RxTransactions.h

@@ -1324,6 +1324,16 @@
               <FileType>5</FileType>
               <FilePath>..\Components\Carousel\Controls\Carousel_MotorBase.h</FilePath>
             </File>
+            <File>
+              <FileName>Carousel_SensorsBase.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Components\Carousel\Controls\Carousel_SensorsBase.c</FilePath>
+            </File>
+            <File>
+              <FileName>Carousel_SensorsBase.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Components\Carousel\Controls\Carousel_SensorsBase.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1348,6 +1358,26 @@
               <FileName>Carousel_DCMotorAdapterTypes.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Components\Carousel\Adapters\DCMotor\Carousel_DCMotorAdapterTypes.h</FilePath>
+            </File>
+            <File>
+              <FileName>Carousel_SensorsAdapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Components\Carousel\Adapters\Sensors\Carousel_SensorsAdapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>Carousel_SensorsAdapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Components\Carousel\Adapters\Sensors\Carousel_SensorsAdapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>Carousel_SensorsAdapterConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Components\Carousel\Adapters\Sensors\Carousel_SensorsAdapterConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>Carousel_SensorsAdapterTypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Components\Carousel\Adapters\Sensors\Carousel_SensorsAdapterTypes.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1414,31 +1444,31 @@
               <FileType>5</FileType>
               <FilePath>..\Components\Slider\Controls\Slider.h</FilePath>
             </File>
+            <File>
+              <FileName>Slider_MotorBase.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Components\Slider\Controls\Slider_MotorBase.c</FilePath>
+            </File>
+            <File>
+              <FileName>Slider_MotorBase.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Components\Slider\Controls\Slider_MotorBase.h</FilePath>
+            </File>
+            <File>
+              <FileName>Slider_SensorsBase.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Components\Slider\Controls\Slider_SensorsBase.c</FilePath>
+            </File>
+            <File>
+              <FileName>Slider_SensorsBase.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Components\Slider\Controls\Slider_SensorsBase.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>Components/Slider/Adapters</GroupName>
           <Files>
-            <File>
-              <FileName>Slider_AdapterBase.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Components\Slider\Adapters\Slider_AdapterBase.c</FilePath>
-            </File>
-            <File>
-              <FileName>Slider_AdapterBase.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Components\Slider\Adapters\Slider_AdapterBase.h</FilePath>
-            </File>
-            <File>
-              <FileName>Slider_Adapters.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Components\Slider\Adapters\Slider_Adapters.h</FilePath>
-            </File>
-            <File>
-              <FileName>Slider_AdaptersConfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Components\Slider\Adapters\Slider_AdaptersConfig.h</FilePath>
-            </File>
             <File>
               <FileName>Slider_DCMotorAdapter.c</FileName>
               <FileType>1</FileType>
@@ -1458,6 +1488,26 @@
               <FileName>Slider_DCMotorAdapterTypes.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Components\Slider\Adapters\DCMotor\Slider_DCMotorAdapterTypes.h</FilePath>
+            </File>
+            <File>
+              <FileName>Slider_SensorsAdapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Components\Slider\Adapters\Sensors\Slider_SensorsAdapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>Slider_SensorsAdapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Components\Slider\Adapters\Sensors\Slider_SensorsAdapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>Slider_SensorsAdapterConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Components\Slider\Adapters\Sensors\Slider_SensorsAdapterConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>Slider_SensorsAdapterTypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Components\Slider\Adapters\Sensors\Slider_SensorsAdapterTypes.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1554,6 +1604,16 @@
               <FileType>5</FileType>
               <FilePath>..\Components\BrewGroup\Controls\BrewGroup_WaterPumpBase.h</FilePath>
             </File>
+            <File>
+              <FileName>BrewGroup_SensorsBase.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Components\BrewGroup\Controls\BrewGroup_SensorsBase.c</FilePath>
+            </File>
+            <File>
+              <FileName>BrewGroup_SensorsBase.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Components\BrewGroup\Controls\BrewGroup_SensorsBase.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1618,6 +1678,26 @@
               <FileName>BrewGroup_WaterPumpAdapterTypes.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Components\BrewGroup\Adapters\WaterPump\BrewGroup_WaterPumpAdapterTypes.h</FilePath>
+            </File>
+            <File>
+              <FileName>BrewGroup_SensorsAdapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Components\BrewGroup\Adapters\Sensors\BrewGroup_SensorsAdapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>BrewGroup_SensorsAdapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Components\BrewGroup\Adapters\Sensors\BrewGroup_SensorsAdapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>BrewGroup_SensorsAdapterConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Components\BrewGroup\Adapters\Sensors\BrewGroup_SensorsAdapterConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>BrewGroup_SensorsAdapterTypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Components\BrewGroup\Adapters\Sensors\BrewGroup_SensorsAdapterTypes.h</FilePath>
             </File>
           </Files>
         </Group>

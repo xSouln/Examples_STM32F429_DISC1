@@ -114,12 +114,14 @@ examples_stm32f429_disc1/stm32f4xx_it.o: ..\Core\Src\stm32f4xx_it.c \
   ..\Components\Carousel\Carousel_Config.h \
   ..\Components\Carousel\Carousel_Info.h \
   ..\Components\Carousel\Controls\Carousel_MotorBase.h \
+  ..\Components\Carousel\Controls\Carousel_SensorsBase.h \
   ..\Components\Slider\Slider_Component.h \
   ..\Components\Slider\Controls\Slider.h \
   ..\Components\Slider\Slider_Types.h \
   ..\Components\Slider\Slider_Config.h \
   ..\Components\Slider\Slider_Info.h \
-  ..\Components\Slider\Adapters\Slider_AdapterBase.h \
+  ..\Components\Slider\Controls\Slider_MotorBase.h \
+  ..\Components\Slider\Controls\Slider_SensorsBase.h \
   ..\Components\BrewGroup\BrewGroup_Component.h \
   ..\Components\BrewGroup\Controls\BrewGroup.h \
   ..\Components\BrewGroup\BrewGroup_Types.h \
@@ -127,4 +129,5 @@ examples_stm32f429_disc1/stm32f4xx_it.o: ..\Core\Src\stm32f4xx_it.c \
   ..\Components\BrewGroup\BrewGroup_Info.h \
   ..\Components\BrewGroup\Controls\BrewGroup_MotorBase.h \
   ..\Components\BrewGroup\Controls\BrewGroup_ThermostatBase.h \
-  ..\Components\BrewGroup\Controls\BrewGroup_WaterPumpBase.h
+  ..\Components\BrewGroup\Controls\BrewGroup_WaterPumpBase.h \
+  ..\Components\BrewGroup\Controls\BrewGroup_SensorsBase.h

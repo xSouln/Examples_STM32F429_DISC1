@@ -1,12 +1,22 @@
 //==============================================================================
 #include "Slider_Component.h"
-#include "Adapters/Slider_Adapters.h"
+#include "Slider/Adapters/DCMotor/Slider_DCMotorAdapter.h"
+#include "Slider/Adapters/Sensors/Slider_SensorsAdapter.h"
 #include "Communications/Slider_RxTransactions.h"
 //==============================================================================
 SliderT Slider;
 //==============================================================================
+
+//==============================================================================
 static void EventListener(SliderT* Slider, SliderEventSelector event, uint32_t args, uint32_t count)
 {
+	ResponseGetStatusT response =
+	{
+		.Slider = Slider->Status,
+		.Sensors = Slider->Sensors.State,
+		.Motor = Slider->Motor.Status
+	};
+	
 	switch ((uint8_t)event)
 	{
 		case SliderEventOpen:
@@ -15,8 +25,8 @@ static void EventListener(SliderT* Slider, SliderEventSelector event, uint32_t a
 				xRxTransactionTransmitEvent(Slider->RxLine->Tx,
 																	SLIDER_DEVICE_KEY,
 																	SLIDER_EVT_OPEN,
-																	&Slider->Status,
-																	sizeof(Slider->Status));
+																	&response,
+																	sizeof(response));
 			}
 			break;
 		
@@ -26,8 +36,8 @@ static void EventListener(SliderT* Slider, SliderEventSelector event, uint32_t a
 				xRxTransactionTransmitEvent(Slider->RxLine->Tx,
 																		SLIDER_DEVICE_KEY,
 																		SLIDER_EVT_CLOSE,
-																		&Slider->Status,
-																		sizeof(Slider->Status));
+																		&response,
+																		sizeof(response));
 			}
 			break;
 			
@@ -37,8 +47,19 @@ static void EventListener(SliderT* Slider, SliderEventSelector event, uint32_t a
 				xRxTransactionTransmitEvent(Slider->RxLine->Tx,
 																		SLIDER_DEVICE_KEY,
 																		SLIDER_EVT_OVERCURRENT,
-																		&Slider->Status,
-																		sizeof(Slider->Status));
+																		&response,
+																		sizeof(response));
+			}
+			break;
+			
+		case SliderEventStatusChanged:
+			if (Slider->RxLine)
+			{
+				xRxTransactionTransmitEvent(Slider->RxLine->Tx,
+																		SLIDER_DEVICE_KEY,
+																		SLIDER_EVT_STATUS_CHANGED,
+																		&response,
+																		sizeof(response));
 			}
 			break;
 		
@@ -73,10 +94,13 @@ SliderDCMotorAdapterT SliderDCMotorAdapter =
 	
 	.PWM_ForwardChannel = 2,
 	.PWM_BackwardChannel = 3,
-	
+};
+//------------------------------------------------------------------------------
+SliderSensorsAdapterT SliderSensorsAdapter =
+{
 	.SensorClosePort = SLIDER_SENSOR_CLOSE_GPIO_Port,
 	.SensorClosePin = SLIDER_SENSOR_CLOSE_Pin,
-	.SensorClosingOnStateLogicLevel = 0,
+	.SensorCloseOnStateLogicLevel = 0,
 	
 	.SensorOpenPort = SLIDER_SENSOR_OPEN_GPIO_Port,
 	.SensorOpenPin = SLIDER_SENSOR_OPEN_Pin,
@@ -90,8 +114,9 @@ SliderDCMotorAdapterT SliderDCMotorAdapter =
 xResult SliderComponentInit(void* parent)
 {
 	SliderInit(&Slider, parent, (SliderInterfaceT*)&Interface);
+	SliderSensorsAdapterInit(&Slider, &SliderSensorsAdapter);
 	SliderDCMotorAdapterInit(&Slider, &SliderDCMotorAdapter);
 	
-  return 0;
+  return xResultAccept;
 }
 //==============================================================================

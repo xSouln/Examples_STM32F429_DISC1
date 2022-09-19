@@ -7,6 +7,7 @@ extern "C" {
 #endif
 //==============================================================================
 #include "Common/xTypes.h"
+#include "Components_Config.h"
 //==============================================================================
 typedef enum
 {
@@ -17,22 +18,12 @@ typedef enum
 typedef enum
 {
 	BrewGroupWaterPumpRequestIdle,
-	BrewGroupWaterPumpRequestSetPosition,
-	BrewGroupWaterPumpRequestSetOptions,
-	BrewGroupWaterPumpRequestClearPosition,
-	BrewGroupWaterPumpRequestStop,
-	BrewGroupWaterPumpRequestDelay
 	
 } BrewGroupWaterPumpRequestSelector;
 //------------------------------------------------------------------------------
 typedef enum
 {
 	BrewGroupWaterPumpValueIdle,
-	BrewGroupWaterPumpValueMotionState,
-	BrewGroupWaterPumpValueOptions,
-	BrewGroupWaterPumpValueMoveTime,
-	BrewGroupWaterPumpValueStepPosition,
-	BrewGroupWaterPumpValueRequestStepPosition,
 	
 } BrewGroupWaterPumpValueSelector;
 //------------------------------------------------------------------------------

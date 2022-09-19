@@ -24,11 +24,14 @@ typedef enum
 	SLIDER_TRY_OPEN,
 	SLIDER_TRY_CLOSE,
 	SLIDER_TRY_STOP,
+	SLIDER_TRY_DROP_POD,
+	SLIDER_TRY_SET_POSITION,
 
 	SLIDER_EVT = 10000,
 	SLIDER_EVT_OPEN,
 	SLIDER_EVT_CLOSE,
-	SLIDER_EVT_OVERCURRENT
+	SLIDER_EVT_OVERCURRENT,
+	SLIDER_EVT_STATUS_CHANGED
 	
 } SLIDER_TRANSACTIONS;
 //==============================================================================
@@ -39,6 +42,20 @@ typedef struct
 	uint32_t TimeOut;
 	
 } SliderRequestTryCloseT;
+//------------------------------------------------------------------------------
+typedef struct
+{
+	uint32_t OpenTime;
+	
+} RequestTryDropPodT;
+//------------------------------------------------------------------------------
+typedef struct
+{
+	SliderStatusT Slider;
+	SliderSensorsStateT Sensors;
+	SliderMotorStatusT Motor;
+	
+} ResponseGetStatusT;
 //==============================================================================
 #ifdef __cplusplus
 }

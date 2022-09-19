@@ -12,10 +12,17 @@
 #include "BrewGroup/Controls/BrewGroup_MotorBase.h"
 #include "BrewGroup/Controls/BrewGroup_ThermostatBase.h"
 #include "BrewGroup/Controls/BrewGroup_WaterPumpBase.h"
+#include "BrewGroup/Controls/BrewGroup_SensorsBase.h"
 //==============================================================================
 typedef enum
 {
 	BrewGroupEventIdle,
+	BrewGroupEventOpen,
+	BrewGroupEventStartMove,
+	BrewGroupEventClose,
+	BrewGroupEventTimeout,
+	BrewGroupEventOvercurrent,
+	BrewGroupEventStatusChanged
 	
 } BrewGroupEventSelector;
 //------------------------------------------------------------------------------
@@ -52,13 +59,7 @@ typedef union
 {
 	struct
 	{
-		uint64_t Sensors : 4;
-		uint64_t Motion : 4;
-		uint64_t Errors : 3;
-		
 		uint64_t InitResult : 4;
-		uint64_t DriverInitResult : 4;
-		uint64_t AdapterInitResult : 4;
 	};
 	
 	uint64_t Value;
@@ -74,6 +75,7 @@ typedef struct
 	BrewGroupMotorBaseT Motor;
 	BrewGroupTermostatBaseT Termostat;
 	BrewGroupWaterPumpBaseT WaterPump;
+	BrewGroupSensorsBaseT Sensors;
 	
 	BrewGroupStatusT Status;
 	

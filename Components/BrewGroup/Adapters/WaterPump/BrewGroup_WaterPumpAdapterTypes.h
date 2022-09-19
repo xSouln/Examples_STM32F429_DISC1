@@ -11,7 +11,15 @@ extern "C" {
 //==============================================================================
 typedef struct
 {
-	uint32_t SensorPin;
+	GPIO_TypeDef* PumpEnablePort;
+	uint32_t PumpEnablePin;
+	
+	REG_TIM_T* WaterFlowMeterTimer;
+	
+	struct
+	{
+		uint8_t PumpEnableOnStateLogicLevel : 1;
+	};
 	
 } BrewGroupWaterPumpAdapterT;
 //==============================================================================

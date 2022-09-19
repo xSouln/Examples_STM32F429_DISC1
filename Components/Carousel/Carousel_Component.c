@@ -1,6 +1,9 @@
 //==============================================================================
 #include "Carousel_Component.h"
+#include "Carousel/Controls/Carousel.h"
 #include "Adapters/DCMotor/Carousel_DCMotorAdapter.h"
+#include "Adapters/Sensors/Carousel_SensorsAdapter.h"
+#include "Carousel/Communications/Carousel_RxTransactions.h"
 //==============================================================================
 CarouselT Carousel;
 //==============================================================================
@@ -8,6 +11,16 @@ static void EventListener(CarouselT* carousel, CarouselEventSelector event, uint
 {
 	switch ((uint8_t)event)
 	{
+		case CarouselEventStatusChanged:
+			if (carousel->RxLine)
+			{
+				xRxTransactionTransmitEvent(carousel->RxLine->Tx,
+																		CAROUSEL_DEVICE_KEY,
+																		CAROUSEL_EVT_STATUS_CHANGED,
+																		&carousel->Status,
+																		sizeof(carousel->Status));
+			}
+			break;
 		
 		default : return;
 	}
@@ -41,7 +54,10 @@ CarouselDCMotorAdapterT CarouselDCMotorAdapter =
 	
 	.PWM_ForwardChannel = 1,
 	.PWM_BackwardChannel = 0,
-	
+};
+//------------------------------------------------------------------------------
+CarouselSensorsAdapterT CarouselSensorsAdapter =
+{
 	.SensorZeroMarkPort = CAROUSEL_SENSOR_ZERO_MARK_GPIO_Port,
 	.SensorZeroMarkPin = CAROUSEL_SENSOR_ZERO_MARK_Pin,
 	.SensorZeroMarkOnStateLogicLevel = 1,
@@ -54,6 +70,7 @@ CarouselDCMotorAdapterT CarouselDCMotorAdapter =
 xResult CarouselComponentInit(void* parent)
 {
 	CarouselInit(&Carousel, parent, (CarouselInterfaceT*)&Interface);
+	CarouselSensorsAdapterInit(&Carousel, &CarouselSensorsAdapter);
 	CarouselDCMotorAdapterInit(&Carousel, &CarouselDCMotorAdapter);
 	
   return 0;

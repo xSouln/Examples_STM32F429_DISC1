@@ -6,21 +6,23 @@
 extern "C" {
 #endif
 //==============================================================================
-#include "Slider/Adapters/Slider_AdapterBase.h"
+#include "Slider/Controls/Slider_MotorBase.h"
 #include "Slider_DCMotorAdapterConfig.h"
 //==============================================================================
 typedef struct
 {
-	uint32_t PWM_ForwardOutputEnableMask;
-	uint32_t PWM_BackwardOutputEnableMask;
+	REG_TIM_T* Timer;
+	uint32_t OutputEnableMask;
+	volatile uint32_t* CompareValue;
 	
-	volatile uint32_t* PWM_ForwardPeriod;
-	volatile uint32_t* PWM_BackwardPeriod;
+} SliderDCMotorAdapterPWM_T;
+//------------------------------------------------------------------------------
+typedef struct
+{
+	SliderDCMotorAdapterPWM_T PWM_Forward;
+	SliderDCMotorAdapterPWM_T PWM_Backward;
 	
-	uint32_t TimeOut;
-	
-	uint32_t Power;
-	uint32_t Acceleration;
+	SliderDCMotorAdapterPWM_T* SelectedPWM;
 	
 	union
 	{
@@ -32,33 +34,19 @@ typedef struct
 		
 		uint32_t Value;
 		
-	} Events;
+	} Triggers;
 	
 } SliderDCMotorAdapterValuesT;
 //------------------------------------------------------------------------------
 typedef struct
 {
-	void* Slider;
-	
 	REG_TIM_T* PWM_ForwardTimer;
 	REG_TIM_T* PWM_BackwardTimer;
-	
-	GPIO_TypeDef* SensorClosePort;
-	uint32_t SensorClosePin;
-	
-	GPIO_TypeDef* SensorOpenPort;
-	uint32_t SensorOpenPin;
-	
-	GPIO_TypeDef* SensorOvercurrentPort;
-	uint32_t SensorOvercurrentPin;
 	
 	SliderDCMotorAdapterValuesT Values;
 	
 	struct
 	{
-		uint8_t SensorClosingOnStateLogicLevel : 1;
-		uint8_t SensorOpenOnStateLogicLevel : 1;
-		uint8_t SensorOvercurrentOnStateLogicLevel : 1;
 		uint8_t PWM_ForwardChannel : 2;
 		uint8_t PWM_BackwardChannel : 2;
 	};

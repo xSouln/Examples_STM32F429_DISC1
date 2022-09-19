@@ -12,16 +12,18 @@ extern "C" {
 //==============================================================================
 typedef struct
 {
-	uint32_t PWM_ForwardOutputEnableMask;
-	uint32_t PWM_BackwardOutputEnableMask;
+	REG_TIM_T* Timer;
+	uint32_t OutputEnableMask;
+	volatile uint32_t* CompareValue;
 	
-	volatile uint32_t* PWM_ForwardPeriod;
-	volatile uint32_t* PWM_BackwardPeriod;
+} BrewGroupDCMotorAdapterPWM_T;
+//------------------------------------------------------------------------------
+typedef struct
+{
+	BrewGroupDCMotorAdapterPWM_T PWM_Forward;
+	BrewGroupDCMotorAdapterPWM_T PWM_Backward;
 	
-	uint32_t TimeOut;
-	
-	uint32_t Power;
-	uint32_t Acceleration;
+	BrewGroupDCMotorAdapterPWM_T* SelectedPWM;
 	
 	union
 	{
@@ -33,7 +35,7 @@ typedef struct
 		
 		uint32_t Value;
 		
-	} Events;
+	} Triggers;
 	
 } BrewGroupDCMotorAdapterValuesT;
 //------------------------------------------------------------------------------
@@ -42,22 +44,10 @@ typedef struct
 	REG_TIM_T* PWM_ForwardTimer;
 	REG_TIM_T* PWM_BackwardTimer;
 	
-	GPIO_TypeDef* SensorClosePort;
-	uint32_t SensorClosePin;
-	
-	GPIO_TypeDef* SensorOpenPort;
-	uint32_t SensorOpenPin;
-	
-	GPIO_TypeDef* SensorOvercurrentPort;
-	uint32_t SensorOvercurrentPin;
-	
 	BrewGroupDCMotorAdapterValuesT Values;
 	
 	struct
 	{
-		uint8_t SensorClosingOnStateLogicLevel : 1;
-		uint8_t SensorOpenOnStateLogicLevel : 1;
-		uint8_t SensorOvercurrentOnStateLogicLevel : 1;
 		uint8_t PWM_ForwardChannel : 2;
 		uint8_t PWM_BackwardChannel : 2;
 	};

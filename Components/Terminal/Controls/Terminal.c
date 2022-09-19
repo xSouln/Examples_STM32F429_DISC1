@@ -77,14 +77,14 @@ void TerminalHandler()
 	if (!Counters.Time_10ms)
 	{
 		Counters.Time_10ms = 9;
-		
+		CupsControllerHandler();
 	}
 	
 	if (!Counters.Time_100ms)
 	{
 		Counters.Time_100ms = 99;
 		
-		CupsControllerHandler();
+		//CupsControllerHandler();
 	}
 	
 	if (!Counters.Time_TCPServerUpdate)
@@ -100,6 +100,7 @@ void TerminalHandler()
 		
 		CarouselHandler(&Carousel);
 		SliderHandler(&Slider);
+		BrewGroupHandler(&BrewGroup);
 	}
 	
 	if (!Counters.Time_1000ms)

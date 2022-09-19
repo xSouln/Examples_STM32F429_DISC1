@@ -15,7 +15,7 @@ static void GetOptions(xRxRequestManagerT* manager)
 {
 	CarouselT* carousel = manager->Device;
 	
-	xRxPutInResponseBuffer(manager->RxLine, &carousel->Options, sizeof(carousel->Options));
+	xRxPutInResponseBuffer(manager->RxLine, &carousel->Motor.Options, sizeof(carousel->Motor.Options));
 }
 //----------------------------------------------------------------------------
 static void GetPosition(xRxRequestManagerT* manager)
@@ -26,7 +26,7 @@ static void GetPosition(xRxRequestManagerT* manager)
 	{
 		.RequestAngle = carousel->RequestAngle,
 		.TotalAngle = carousel->TotalAngle,
-		.EncoderPosition = CarouselGetAdapterValue(carousel, CarouselMotorValueStepPosition)
+		.EncoderPosition = carousel->Motor.Interface->GetValue(carousel, CarouselMotorValueEncoderPosition)
 	};
 	
 	xRxPutInResponseBuffer(manager->RxLine, &response, sizeof(response));
@@ -41,11 +41,11 @@ static void GetMotionState(xRxRequestManagerT* manager)
 		.Status = carousel->Status,
 		.RequestAngle = carousel->RequestAngle,
 		.TotalAngle = carousel->TotalAngle,
-		.Power = carousel->TotalPower,
+		.Power = carousel->Motor.TotalPower,
 		
-		.MoveTime = carousel->MoveTime,
+		.MoveTime = carousel->Motor.MoveTime,
 		
-		.EncoderPosition = CarouselGetAdapterValue(carousel, CarouselMotorValueStepPosition)
+		.EncoderPosition = carousel->Motor.Interface->GetValue(carousel, CarouselMotorValueEncoderPosition)
 	};
 	
 	xRxPutInResponseBuffer(manager->RxLine, &response, sizeof(response));
@@ -62,6 +62,7 @@ static void SetPosition(xRxRequestManagerT* manager, CarouselRequestSetPositionT
 {
 	CarouselT* carousel = manager->Device;
 	int16_t result = CarouselSetPosition(carousel, request);
+	carousel->RxLine = manager->RxLine;
 	
 	xRxPutInResponseBuffer(manager->RxLine, &result, sizeof(result));
 	xRxPutInResponseBuffer(manager->RxLine, &carousel->Status, sizeof(carousel->Status));
@@ -73,7 +74,7 @@ static void SetOptions(xRxRequestManagerT* manager, CarouselRequestSetOptionsT* 
 	int16_t result = CarouselSetOptions(carousel, request);
 	
 	xRxPutInResponseBuffer(manager->RxLine, &result, sizeof(result));
-	xRxPutInResponseBuffer(manager->RxLine, &carousel->Options, sizeof(carousel->Options));
+	xRxPutInResponseBuffer(manager->RxLine, &carousel->Motor.Options, sizeof(carousel->Motor.Options));
 }
 //----------------------------------------------------------------------------
 static void SetCalibration(xRxRequestManagerT* manager, CarouselCalibrationT* request)
@@ -88,6 +89,7 @@ static void SetPod(xRxRequestManagerT* manager, uint8_t* request)
 {
 	CarouselT* carousel = manager->Device;
 	int16_t result = CarouselSetPod(carousel, *request);
+	carousel->RxLine = manager->RxLine;
 	
 	xRxPutInResponseBuffer(manager->RxLine, &result, sizeof(result));
 }
@@ -95,13 +97,13 @@ static void SetPod(xRxRequestManagerT* manager, uint8_t* request)
 static void TryResetPosition(xRxRequestManagerT* manager)
 {
 	CarouselT* carousel = manager->Device;
-	int16_t result = CarouselDeclareAdapterRequest(carousel, CarouselMotorRequestClearPosition, 0, 0);
+	int16_t result = CarouselResetPosition(carousel);
 	
 	CarouselResponseTryClearPositionT response =
 	{
 		.RequestAngle = carousel->RequestAngle,
 		.TotalAngle = carousel->TotalAngle,
-		.EncoderPosition = CarouselGetAdapterValue(carousel, CarouselMotorValueStepPosition)
+		.EncoderPosition = carousel->Motor.Interface->GetValue(carousel, CarouselMotorValueEncoderPosition)
 	};
 	
 	xRxPutInResponseBuffer(manager->RxLine, &result, sizeof(result));
@@ -112,6 +114,7 @@ static void TryStop(xRxRequestManagerT* manager)
 {
 	CarouselT* carousel = manager->Device;
 	int16_t result = CarouselStop(carousel);
+	carousel->RxLine = manager->RxLine;
 	
 	xRxPutInResponseBuffer(manager->RxLine, &result, sizeof(result));
 	xRxPutInResponseBuffer(manager->RxLine, &carousel->Status, sizeof(carousel->Status));

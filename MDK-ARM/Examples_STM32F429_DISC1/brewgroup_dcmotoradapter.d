@@ -62,4 +62,5 @@ examples_stm32f429_disc1/brewgroup_dcmotoradapter.o: \
   ..\Components\BrewGroup\BrewGroup_Info.h \
   ..\Components\BrewGroup\Controls\BrewGroup_ThermostatBase.h \
   ..\Components\BrewGroup\Controls\BrewGroup_WaterPumpBase.h \
+  ..\Components\BrewGroup\Controls\BrewGroup_SensorsBase.h \
   ..\Components\BrewGroup\Controls\BrewGroup.h

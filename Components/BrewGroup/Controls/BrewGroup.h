@@ -9,10 +9,11 @@ extern "C" {
 #include "BrewGroup/BrewGroup_Types.h"
 //==============================================================================
 xResult BrewGroupInit(BrewGroupT* BrewGroup, void* parent, BrewGroupInterfaceT* interface);
-
 void BrewGroupHandler(BrewGroupT* BrewGroup);
 
-xResult BrewGroupStop(BrewGroupT* BrewGroup);
+xResult BrewGroupSetMotorOptions(BrewGroupT* device, BrewGroupMotorOptionsT* request);
+
+void BrewGroupStop(BrewGroupT* device);
 //==============================================================================
 #ifdef __cplusplus
 }

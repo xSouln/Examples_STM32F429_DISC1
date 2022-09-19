@@ -59,4 +59,5 @@ examples_stm32f429_disc1/carousel_rxtransactions.o: \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_timer.h \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_uart.h \
   ..\Libs\Registers\registers_stm32f4xx\registers_stm32f4xx_i2c.h \
-  ..\Components\Carousel\Controls\Carousel_MotorBase.h
+  ..\Components\Carousel\Controls\Carousel_MotorBase.h \
+  ..\Components\Carousel\Controls\Carousel_SensorsBase.h

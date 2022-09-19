@@ -79,14 +79,14 @@ int CupsControllerComponentInit(void* parent)
 	CupsControllerDrawManagerInit(&CupsController.Cups[CupNumber1], &DrawingTemplate1);
 	CupsControllerDrawManagerInit(&CupsController.Cups[CupNumber2], &DrawingTemplate2);
 	
-	WS2812_DrawingStart(&CupsController.Cups[CupNumber1].Driver.DrawManager);
-	WS2812_DrawingStart(&CupsController.Cups[CupNumber2].Driver.DrawManager);
+	//WS2812_DrawingStart(&CupsController.Cups[CupNumber1].Driver.DrawManager);
+	//WS2812_DrawingStart(&CupsController.Cups[CupNumber2].Driver.DrawManager);
 	//----------------------------------------------------------------------------
 	WS2812_ColorT color =
 	{
-		.Green = 0x01,
-		.Red = 0x01,
-		.Blue = 0x01
+		.Green = 0x03,
+		//.Red = 0x01,
+		//.Blue = 0x01
 	};
 	
 	WS2812_FillPixels(&CupsController.Cups[CupNumber1].Driver, color, 0, 8);
