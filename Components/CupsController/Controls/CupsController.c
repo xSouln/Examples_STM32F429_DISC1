@@ -1,5 +1,6 @@
 //==============================================================================
 #include "CupsController.h"
+#include "CupsController_DrawManager.h"
 #include "CupsController/Controls/CupsController_LEDBase.h"
 //==============================================================================
 CupsControllerT CupsController;

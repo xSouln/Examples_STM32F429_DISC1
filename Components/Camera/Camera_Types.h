@@ -104,17 +104,26 @@ typedef enum
 	
 } CameraSnapshotStatus;
 //------------------------------------------------------------------------------
+typedef enum
+{
+	CameraSnapshotResultNoError,
+	CameraSnapshotResultTimeOut,
+	CameraSnapshotResultOutOfRange
+	
+} CameraSnapshotResults;
+//------------------------------------------------------------------------------
 typedef union
 {
 	struct
 	{
 		uint32_t IsCapture : 1;
 		
-		CameraSnapshotStatus Snapshot : 2;
+		uint32_t Snapshot : 2;
+		uint32_t SnapshotResult : 2;
 		
-		xResult InitResult : 4;
-		xResult DriverInitResult : 4;
-		xResult AdapterInitResult : 4;
+		uint32_t InitResult : 4;
+		uint32_t DriverInitResult : 4;
+		uint32_t AdapterInitResult : 4;
 	};
 	uint32_t Value;
 	
@@ -132,6 +141,8 @@ typedef struct
 	
 	xRxRequestT* Requests;
 	xTxTransferT TransferLayer;
+	
+	uint32_t TimeOut;
 	
 	CameraBufferT* SnapshotBuffer;
 	uint32_t SnapshotBufferSize;

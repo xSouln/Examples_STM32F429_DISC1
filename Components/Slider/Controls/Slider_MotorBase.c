@@ -141,8 +141,6 @@ void SliderMotorHandler(SliderT* device)
 			device->Motor.Interface->RequestListener(device, SliderMotorRequestSetPower, 0, 0);
 		}
 	}
-	
-	end:;
 }
 //------------------------------------------------------------------------------
 xResult SliderMotorBaseInit(SliderMotorBaseT* adapter)

@@ -62,7 +62,6 @@ void TerminalTimerUpdateEvent()
 void TerminalHandler()
 {
 	static uint8_t time_update_template;
-	static uint8_t template_id;
 	
 	if (!Counters.Time_5ms)
 	{

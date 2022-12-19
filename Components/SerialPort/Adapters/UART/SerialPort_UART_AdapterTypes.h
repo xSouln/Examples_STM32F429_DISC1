@@ -6,7 +6,8 @@
  extern "C" {
 #endif 
 //==============================================================================
-#include "SerialPort/Adapters/SerialPort_AdaptersTypes.h"
+#include "Components_Config.h"
+#include "Common/xRxReceiver.h"
 #include "SerialPort_UART_AdapterInfo.h"
 #include "SerialPort_UART_AdapterConfig.h"
 //==============================================================================

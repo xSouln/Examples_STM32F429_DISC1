@@ -141,8 +141,6 @@ void BrewGroupMotorHandler(BrewGroupT* device)
 			device->Motor.Interface->RequestListener(device, BrewGroupMotorRequestSetPower, 0, 0);
 		}
 	}
-	
-	end:;
 }
 //------------------------------------------------------------------------------
 xResult BrewGroupMotorBaseInit(BrewGroupMotorBaseT* adapter)

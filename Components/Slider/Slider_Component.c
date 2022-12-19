@@ -84,7 +84,7 @@ static xResult RequestListener(SliderT* Slider, SliderRequestSelector event, uin
 const static SliderInterfaceT Interface =
 {
 	.EventListener = (SliderEventListenerT)EventListener,
-	.RequestListener = (SliderRequestListenerT)EventListener,
+	.RequestListener = (SliderRequestListenerT)RequestListener,
 };
 //------------------------------------------------------------------------------
 SliderDCMotorAdapterT SliderDCMotorAdapter =

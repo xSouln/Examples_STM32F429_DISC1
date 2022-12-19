@@ -33,7 +33,7 @@ static xResult RequestListener(BrewGroupT* BrewGroup, BrewGroupRequestSelector e
 const static BrewGroupInterfaceT Interface =
 {
 	.EventListener = (BrewGroupEventListenerT)EventListener,
-	.RequestListener = (BrewGroupRequestListenerT)EventListener,
+	.RequestListener = (BrewGroupRequestListenerT)RequestListener,
 };
 //------------------------------------------------------------------------------
 BrewGroupDCMotorAdapterT BrewGroupDCMotorAdapter =

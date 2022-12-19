@@ -50,9 +50,9 @@ typedef union
 {
 	struct
 	{
-		SliderSensors Close : 1;
-		SliderSensors Open : 1;
-		SliderSensors Overcurrent : 1;
+		uint8_t Close : 1;
+		uint8_t Open : 1;
+		uint8_t Overcurrent : 1;
 	};
 	
 	SliderSensors Value;
